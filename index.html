@@ -52,20 +52,68 @@
 
         
         <form>
-          <fieldset>
-            <div class="row">
-              <div class="three columns">
-                <label>Cool</label>
-                <div class="row collapse">
-                    <div class="offset-by-eight two columns">
-                        <input type="text" placeholder="72">
+          <div class="row">
+            <div class="twelve columns">
+              <div class="row">
+                <div class="six columns centered">
+                  <div class="row collapse">
+                    <div class="offset-by-two three columns">
+                      <label>Occupied</label>
+                    </div>
+                    <div class="offset-by-one three columns end">
+                      <label>Unoccupied</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six mobile-two columns centered">
+                  <div class="row collapse">
+                    <div class="two mobile-two column">
+                      <label>Cooling</label>
+                    </div>
+                    <div class="two mobile-one columns">
+                      <input type="text" placeholder="72" id="occupied-cooling">
+                    </div>
+                    <div class="one mobile-one columns">
+                      <span class="postfix">&deg;F</span>
+                    </div>
+
+                    <div class="two mobile-one columns offset-by-one">
+                      <input type="text" placeholder="72" id="unoccupied-cooling">
+                    </div>
+                    <div class="one mobile-one columns end">
+                      <span class="postfix">&deg;F</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="six columns centered">
+                  <div class="row collapse">
+                    <div class="two column">
+                      <label>Heating</label>
                     </div>
                     <div class="two columns">
-                        <span class="postfix">&deg;F</span>
+                      <input type="text" placeholder="72">
                     </div>
+                    <div class="one columns">
+                      <span class="postfix">&deg;F</span>
+                    </div>
+
+                    <div class="two columns offset-by-one">
+                      <input type="text" placeholder="72">
+                    </div>
+                    <div class="one columns end">
+                      <span class="postfix">&deg;F</span>
+                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-          </fieldset>
+          </div>
         </form>
 
 
