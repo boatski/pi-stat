@@ -5,3 +5,14 @@
 .form-elements {
 	text-align: center;
 }
+
+.not-resizable {
+	background-color: #D6D6D6;
+	height: 360px;
+	margin-right: 20px;
+}
+
+.resizable {
+	background-color: #86D483;
+	height: 240px;
+}
