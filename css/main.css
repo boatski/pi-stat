@@ -8,7 +8,7 @@
 
 .not-resizable {
 	background-color: #D6D6D6;
-	height: 360px;
+	height: 480px;
 	margin-right: 20px;
 }
 
@@ -17,23 +17,29 @@
 	height: 240px;;
 	position: relative;
 	width: 100%;
+	top: 140px;
+	overflow: hidden;
 }
 
+/* Headers displaying day of the week */
 .date-headers {
+	width: 100%;
 	margin-right: 20px;
-	text-align: center;
+	text-align: right;
 }
 
+/* List of times for reference when setting schedule. */
 .schedule-times {
-	height: 360px;
+	height: 480px;
 	margin-right: 20px;
 }
 
 .schedule-times ul {
 	list-style-type: none;
+	margin-top: 20px;
 }
 
 .schedule-times ul li {
-	padding-bottom: 5px;
+	padding-top: 35px;
 	text-align: right;
 }
