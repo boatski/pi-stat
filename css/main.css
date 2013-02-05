@@ -14,5 +14,26 @@
 
 .resizable {
 	background-color: #86D483;
-	height: 240px;
+	height: 240px;;
+	position: relative;
+	width: 100%;
+}
+
+.date-headers {
+	margin-right: 20px;
+	text-align: center;
+}
+
+.schedule-times {
+	height: 360px;
+	margin-right: 20px;
+}
+
+.schedule-times ul {
+	list-style-type: none;
+}
+
+.schedule-times ul li {
+	padding-bottom: 5px;
+	text-align: right;
 }
