@@ -72,14 +72,16 @@
                   <label>Cooling</label>
                 </div>
                 <div class="two mobile-one columns">
-                  <input type="text" placeholder="72" id="occupied-cooling">
+                  <input type="number" min="60" max="80" placeholder="72" id="occupied-cool" required>
+                  <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns">
                   <span class="postfix">&deg;F</span>
                 </div>
 
                 <div class="two mobile-one columns offset-by-one">
-                  <input type="text" placeholder="72" id="unoccupied-cooling">
+                  <input type="text" min="60" max="80" placeholder="72" id="unoccupied-cool" required>
+                  <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns end">
                   <span class="postfix">&deg;F</span>
@@ -95,14 +97,16 @@
                   <label>Heating</label>
                 </div>
                 <div class="two mobile-one columns">
-                  <input type="text" placeholder="72" id="occupied-cooling">
+                  <input type="text" min="60" max="80" placeholder="72" id="occupied-heat" required>
+                  <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns">
                   <span class="postfix">&deg;F</span>
                 </div>
 
                 <div class="two mobile-one columns offset-by-one">
-                  <input type="text" placeholder="72" id="unoccupied-cooling">
+                  <input type="text" min="60" max="80" placeholder="72" id="unoccupied-heat" required>
+                  <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns end">
                   <span class="postfix">&deg;F</span>
@@ -279,6 +283,7 @@
 
   <script src="js/jquery-ui.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/tstat.js"></script>
   
   <!-- Initialize JS Plugins -->
   <script src="js/foundation/app.js"></script>
