@@ -57,9 +57,9 @@
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
   		<ul class="nav-bar">
-  		  <li class="active"><a href="index.html">Thermostat</a></li>
-  		  <li class=""><a href="history.html">History</a></li>
-  		  <li class=""><a href="alarms.html">Alarms</a></li>
+  		  <li class="active"><a href="index.php">Thermostat</a></li>
+  		  <li class=""><a href="history.php">History</a></li>
+  		  <li class=""><a href="alarms.php">Alarms</a></li>
   		</ul>
     </div>
   </div>
