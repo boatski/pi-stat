@@ -79,10 +79,12 @@
 	    $.ajax( {
 	      type: "POST",
 	      url: $("#thermostat").attr( 'action' ),
-	      //url: ".",
 	      data: formData,
+	      error: function(xhr, status, error) {
+			  var err = eval("(" + xhr.responseText + ")");
+			  alert(err.Message);
+			},
 	      success: function( response ) {
-	      	$('#test').load('ajax/updateThermostat.php');
 	      	console.log("Success");
 	      }
 	    });
