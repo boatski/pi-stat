@@ -71,6 +71,22 @@
     	return (number < 10 ? '0' : '') + number;
    
 	}
+
+	$("#thermostat").submit( function() {
+		var formData = $('#thermostat').serialize();
+
+		console.log("Click");
+	    $.ajax( {
+	      type: "POST",
+	      url: $("#thermostat").attr( 'action' ),
+	      //url: ".",
+	      data: formData,
+	      success: function( response ) {
+	      	console.log("Success");
+	      }
+	    });
+	    return false;
+	  } );
  
  
  });

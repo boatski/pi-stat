@@ -29,26 +29,23 @@
 </head>
 <body>
 
-<?php
+  <?php
 
-  ini_set('display_errors',1);
-  error_reporting(E_ALL);
-  class MyDB extends SQLite3
-  {
-      function __construct()
-      {
-          $this->open('db/pi-stat.db');
-      }
-  }
+    ini_set('display_errors',1);
+    error_reporting(E_ALL);
 
-  $db = new MyDB();
+    $db = new PDO('sqlite:db/pi-stat.db') or die("fail to connect db");
 
-  $result = $db->query('SELECT * FROM Thermostat');
-  $row = $result->fetchArray();
-  $occCool = $row['OccupiedCool'];
-  $unoccCool = $row['UnoccupiedCool'];
-  $occHeat = $row['OccupiedHeat'];
-  $unoccHeat = $row['UnoccupiedHeat'];
+    $result = $db->query('SELECT * FROM Thermostat');
+
+    foreach ($result as $row) {
+
+      $occCool = $row['OccupiedCool'];
+      $unoccCool = $row['UnoccupiedCool'];
+      $occHeat = $row['OccupiedHeat'];
+      $unoccHeat = $row['UnoccupiedHeat'];
+
+    }
   ?>
 
 
@@ -74,7 +71,7 @@
       <ul class="tabs-content">
         <li class="active" id="simple1Tab">
 
-        <form>
+        <form method="POST" action="ajax/updateThermostat.php" id="thermostat">
 
           <div class="form-elements row">
             <div class="six columns">
@@ -96,7 +93,7 @@
                   <label>Cooling</label>
                 </div>
                 <div class="two mobile-one columns">
-                  <input type="number" value="<?php echo $occCool ?>" min="60" max="80" placeholder="72" id="occupied-cool" required>
+                  <input type="number" value="<?php echo $occCool ?>" min="60" max="80" placeholder="72" name="occupied-cool" id="occupied-cool" required>
                   <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns">
@@ -104,7 +101,7 @@
                 </div>
 
                 <div class="two mobile-one columns offset-by-one">
-                  <input type="number" value="<?php echo $unoccCool ?>" min="60" max="80" placeholder="72" id="unoccupied-cool" required>
+                  <input type="number" value="<?php echo $unoccCool ?>" min="60" max="80" placeholder="72" name="unoccupied-cool" id="unoccupied-cool" required>
                   <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns end">
@@ -121,7 +118,7 @@
                   <label>Heating</label>
                 </div>
                 <div class="two mobile-one columns">
-                  <input type="number" value="<?php echo $occHeat ?>" min="60" max="80" placeholder="72" id="occupied-heat" required>
+                  <input type="number" value="<?php echo $occHeat ?>" min="60" max="80" placeholder="72" name="occupied-heat" id="occupied-heat" required>
                   <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns">
@@ -129,7 +126,7 @@
                 </div>
 
                 <div class="two mobile-one columns offset-by-one">
-                  <input type="number" value="<?php echo $unoccHeat ?>" min="60" max="80" placeholder="72" id="unoccupied-heat" required>
+                  <input type="number" value="<?php echo $unoccHeat ?>" min="60" max="80" placeholder="72" name="unoccupied-heat" id="unoccupied-heat" required>
                   <span class="error" aria-live="polite"></span>
                 </div>
                 <div class="one mobile-one columns end">
@@ -141,10 +138,11 @@
 
           <div class="row">
             <div class="six columns">
-                <button class="button">Submit</button>
+                <input type="submit" name="submit" id="submit" class="button">
             </div>
           </div><!-- end row -->
-        </form>
+        </form><!-- end form -->
+        <div id="test"></div>
 
 
 		  </li>
