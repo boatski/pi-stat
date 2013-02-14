@@ -82,6 +82,7 @@
 	      //url: ".",
 	      data: formData,
 	      success: function( response ) {
+	      	$('#test').load('ajax/updateThermostat.php');
 	      	console.log("Success");
 	      }
 	    });
