@@ -22,7 +22,6 @@
 
 	
 		$db->exec($query);
-		print("DB Success");
 	}
 	catch(PDOException $e) {echo $e->getMessage();}
 

@@ -72,7 +72,7 @@
    
 	}
 
-	/*$("#thermostat").submit( function() {
+	$("#thermostat").submit( function() {
 		var formData = $('#thermostat').serialize();
 
 	    $.ajax( {
@@ -85,11 +85,10 @@
 			},
 	      success: function( response ) {
 	      	console.log("Success");
-	      	$('#test').text(response.responseText);
 	      }
 	    });
 	    return false;
-	  } );*/
+	  } );
  
  
  });
