@@ -4,8 +4,10 @@
     error_reporting(E_ALL);
     try{
 
-    	print($_POST['occupied-cool']);
-	    $db = new PDO('sqlite:../db/pi-stat.db') or die("fail to connect db");
+	    $db = new PDO('sqlite:../db/pi-stat.db');
+
+    	$db->setAttribute(PDO::ATTR_ERRMODE, 
+                            PDO::ERRMODE_EXCEPTION);
 
 	    $occCool = $_POST['occupied-cool'];
 	    $unoccCool = $_POST['unoccupied-cool'];
@@ -13,10 +15,10 @@
 	    $unoccHeat = $_POST['unoccupied-heat'];
 
 	    $query = "UPDATE Thermostat 
-	    		  SET OccupiedCool = '$occCool',
-	    		  UnoccupiedCool = '$unoccCool',
-	    		  OccupiedHeat = '$occHeat',
-	    		  UnoccupiedHeat = '$unoccHeat'";
+	    		  SET OccupiedCool = {$occCool},
+	    		  UnoccupiedCool = {$unoccCool},
+	    		  OccupiedHeat = {$occHeat},
+	    		  UnoccupiedHeat = {$unoccHeat};";
 
 	
 		$db->exec($query);
