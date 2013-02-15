@@ -19,8 +19,7 @@
 	    		  UnoccupiedHeat = '$unoccHeat'";
 
 	
-		$stmt = $db->prepare($query);
-		$stmt->execute();
+		$db->exec($query);
 		print("DB Success");
 	}
 	catch(PDOException $e) {echo $e->getMessage();}
