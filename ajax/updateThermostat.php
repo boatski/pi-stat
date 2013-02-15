@@ -4,6 +4,7 @@
     error_reporting(E_ALL);
     try{
 
+    	print($_POST['occupied-cool']);
 	    $db = new PDO('sqlite:../db/pi-stat.db') or die("fail to connect db");
 
 	    $occCool = $_POST['occupied-cool'];
