@@ -75,17 +75,17 @@
 	$("#thermostat").submit( function() {
 		var formData = $('#thermostat').serialize();
 
-		console.log("Click");
 	    $.ajax( {
 	      type: "POST",
 	      url: $("#thermostat").attr( 'action' ),
 	      data: formData,
-	      error: function(xhr, status, error) {
+	      fail: function(xhr, status, error) {
 			  var err = eval("(" + xhr.responseText + ")");
 			  alert(err.Message);
 			},
 	      success: function( response ) {
 	      	console.log("Success");
+	      	$('#test').text(response.responseText);
 	      }
 	    });
 	    return false;
