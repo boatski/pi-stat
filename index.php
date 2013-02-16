@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 
+  <?php
+
+    ini_set('display_errors',1);
+    error_reporting(E_ALL);
+
+    $db = new PDO('sqlite:db/pi-stat.db') or die("fail to connect db");
+
+    $result = $db->query('SELECT * FROM Thermostat');
+
+    foreach ($result as $row) {
+
+      $occCool = $row['OccupiedCool'];
+      $unoccCool = $row['UnoccupiedCool'];
+      $occHeat = $row['OccupiedHeat'];
+      $unoccHeat = $row['UnoccupiedHeat'];
+
+      $db = null;
+    }
+  ?>
+
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 <!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -28,25 +48,6 @@
 
 </head>
 <body>
-
-  <?php
-
-    ini_set('display_errors',1);
-    error_reporting(E_ALL);
-
-    $db = new PDO('sqlite:db/pi-stat.db') or die("fail to connect db");
-
-    $result = $db->query('SELECT * FROM Thermostat');
-
-    foreach ($result as $row) {
-
-      $occCool = $row['OccupiedCool'];
-      $unoccCool = $row['UnoccupiedCool'];
-      $occHeat = $row['OccupiedHeat'];
-      $unoccHeat = $row['UnoccupiedHeat'];
-
-    }
-  ?>
 
 
 
