@@ -75,6 +75,7 @@
 	$("#thermostat").submit( function() {
 		var formData = $('#thermostat').serialize();
 
+		// Update Thermostat table with new form values.
 	    $.ajax( {
 	      type: "POST",
 	      url: $("#thermostat").attr( 'action' ),
