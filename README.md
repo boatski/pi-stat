@@ -13,4 +13,6 @@ History: Unimplemented
 Weather: Unimplemented  
 
 Current Goal:  
-I hope to have the thermostat and scheduling fully implemented by March 1.  
+I hope to have the thermostat and scheduling fully implemented by March 1. 
+
+Demo [here](www.cstrauch.com/pi-stat). 
