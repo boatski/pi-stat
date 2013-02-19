@@ -29,10 +29,10 @@ class SensorPoller(object):
 	A temporary dictionary is used to test on other platforms where the sensor can't be polled.
 	"""
 	def updateSensorData(self):
-		#process = subprocess.Popen([sensorProgramLocatoin, defaultSensorType, defaultSensorPin], stdout=subprocess.PIPE)
-		#out, err = process.communicate()
-		temp = "'Temp' : 24, 'Hum' : 35"
-		out = "{" + temp + "}"
+		process = subprocess.Popen([sensorProgramLocatoin, defaultSensorType, defaultSensorPin], stdout=subprocess.PIPE)
+		out, err = process.communicate()
+		#out = "'Temp' : 24, 'Hum' : 35"
+		out = "{" + out + "}"
 
 		# Convert the string into a dictionary
 		self.data = ast.literal_eval(out)
