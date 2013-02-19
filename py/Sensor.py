@@ -6,6 +6,10 @@ class Sensor(object):
 		self.poller = SensorPoller()
 		self.pollSensor()
 
+	"""
+	Calls the SensorPoller to poll the sensor and update the dictionary with new
+	temperature and humidity values.
+	"""
 	def pollSensor(self):
 		self.poller.updateSensorData()
 		self.data = self.poller.getSensorData()

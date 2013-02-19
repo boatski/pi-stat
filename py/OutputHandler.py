@@ -1,6 +1,65 @@
-
+import subprocess
+import ast
 
 class OutputHandler(object):
 
+	fanPin = 1
+	fanOutput = False
+	heatPin = 2
+	heatOutput = False
+	coolPin = 3
+	coolOutput = False
+
+	outputOn = 1
+	outputOff = 0
+
+	gpioCommand = "gpio"
+	write = "write"
+	mode = "mode"
+	outputMode = "out"
+
 	def __init__(self):
-		pass
+		self.__setupGPIO()
+
+	"""
+	Runs the command 'gpio mode pin# out' to set the mode for that specific pin number
+	"""
+	def __setupGPIO(self):
+		process = subprocess.Popen([self.gpioCommand, self.mode, str(self.fanPin), self.outputMode], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.mode, str(self.heatPin), self.outputMode], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.mode, str(self.coolPin), self.outputMode], stdout=subprocess.PIPE)
+
+	def disableAllOutputs(self):
+		self.disableFan()
+		self.disableHeat()
+		self.disableCool()
+
+	"""
+	The fan should be enabled before heat or cool is enabled. Ideally, there should be a small delay before
+	enabling heat or cool as well.
+	"""
+	def enableFan(self):
+		process = subprocess.Popen([self.gpioCommand, self.write, self.fanPin, self.outputOn], stdout=subprocess.PIPE)
+
+	"""
+	The fan should be disabled after heat or cool is disabled. Ideally, there should be a small delay after
+	disabling heat or cool as well.
+	"""
+	def disableFan(self):
+		process = subprocess.Popen([self.gpioCommand, self.write, self.fanPin, self.outputOff], stdout=subprocess.PIPE)
+
+	def enableCool(self):
+		self.enableFan()
+		process = subprocess.Popen([self.gpioCommand, self.write, self.coolPin, self.outputOn], stdout=subprocess.PIPE)
+
+	def disableCool(self):
+		process = subprocess.Popen([self.gpioCommand, self.write, self.coolPin, self.outputOff], stdout=subprocess.PIPE)
+		self.disableFan()
+
+	def enableHeat(self):
+		self.enableFan()
+		process = subprocess.Popen([self.gpioCommand, self.write, self.heatPin, self.outputOn], stdout=subprocess.PIPE)
+
+	def disableHeat(self):
+		process = subprocess.Popen([self.gpioCommand, self.write, self.heatPin, self.outputOff], stdout=subprocess.PIPE)
+		self.disableFan()

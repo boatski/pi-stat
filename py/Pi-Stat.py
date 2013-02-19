@@ -1,35 +1,60 @@
 import threading
+import atexit
 from Sensor import Sensor
 from Thermostat import Thermostat
 
-# Time intervals for various functions in seconds
-sensorPollInterval = 5
+class PiStat(object):
 
-# Objects
-sensor = Sensor()
-tstat = Thermostat(sensor)
+    prevTemperature = 0
+    curTemperature = 0
+    curHumidity = 0
 
-"""
-Poll the sensor for temperature and humidity readings every five seconds, then
-update the Sensor object with the most recent readings.
-"""
-def pollSensor():
-    # Poll the sensor to grab updated readings
-    sensor.pollSensor()
+    def __init__(self):
+        # Time intervals for various functions in seconds
+        self.sensorPollInterval = 5
 
-    # Get the sensor readings
-    data = sensor.getSensorData()
-    temperature = data['Temp']
-    humidity = data['Hum']
+        # Objects
+        self.sensor = Sensor()
+        self.tstat = Thermostat(self.sensor)
 
-    print "Temp: " + str(sensor.getTemperature()) + "\nHumidity: " + str(sensor.getHumidity())
-
-    tstat.control()
-
-    # call pollSensor() again in 'sensorPollInterval' seconds
-    threading.Timer(sensorPollInterval, pollSensor).start()
+        # Call exitCleanup() when the program is ended or if it crashes
+        atexit.register(self.exitCleanup)
+        
+        # start calling f now and every 60 sec thereafter
+        self.pollSensor()
 
 
+    """
+    Poll the sensor for temperature and humidity readings every five seconds, then
+    update the Sensor object with the most recent readings.
+    """
+    def pollSensor(self):
+        # Poll the sensor to grab updated readings
+        self.sensor.pollSensor()
 
-# start calling f now and every 60 sec thereafter
-pollSensor()
+        # Get the sensor readings
+        self.data = self.sensor.getSensorData()
+        self.curTemperature = self.data['Temp']
+        self.curHumidity = self.data['Hum']
+
+        if self.curTemperature != self.prevTemperature:
+            self.prevTemperature = self.curTemperature
+
+            print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
+            self.tstat.control()
+        else:
+            print "Same temperature."
+
+        # call pollSensor() again in 'sensorPollInterval' seconds
+        threading.Timer(self.sensorPollInterval, self.pollSensor).start()
+
+
+    """
+    Ensure that all three outputs are off if the program is ended or if it crashes.
+    """
+    def exitCleanup(self):
+        print 'My application is ending!'
+
+
+# Start the script
+pistat = PiStat()

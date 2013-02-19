@@ -3,6 +3,7 @@ import sys
 from Setpoint import Setpoint
 from Lockout import Lockout
 from Sensor import Sensor
+from OutputHandler import OutputHandler
 
 class TemperatureControl(object):
 	
@@ -18,6 +19,7 @@ class TemperatureControl(object):
 
 	def __init__(self, sensor):
 		self.sensor = sensor
+		self.output = OutputHandler()
 		self.updateSetpoints()
 
 	"""
@@ -27,45 +29,30 @@ class TemperatureControl(object):
 	def control(self):
 		self.updateSetpoints()
 		self.indoorTemperature = self.sensor.getTemperature()
-
+		
 		if self.outdoorTemperature >= self.outdoorLockout.getSetpoint(): # If outdoorTemp >= outdoorLockout, do not heat
 			if self.scheduleIsOn:
-				if self.indoorTemperature >= (self.occupiedCool.getSetpoint() + self.offset): # Turn on cool
-					self.fanIsOn = True
-					self.heatIsOn = False
-					self.coolIsOn = True
+				if self.indoorTemperature > (self.occupiedCool.getSetpoint() + self.offset): # Turn on cool
+					self.output.enableCool()
 				else:
-					self.fanIsOn = False
-					self.heatIsOn = False
-					self.coolIsOn = False
+					self.output.disableCool()
 			else: # Schedule is off
-				if self.indoorTemperature >= (self.unoccupiedCool.getSetpoint() + self.offset): # Turn on cool
-					self.fanIsOn = True
-					self.heatIsOn = False
-					self.coolIsOn = True
+				if self.indoorTemperature > (self.unoccupiedCool.getSetpoint() + self.offset): # Turn on cool
+					self.output.enableCool()
 				else:
-					self.fanIsOn = False
-					self.heatIsOn = False
-					self.coolIsOn = False
+					self.output.disableCool()
 		elif self.outdoorTemperature < self.outdoorLockout.getSetpoint(): # If outdoorTemp < outdoorLockout, do not cool
 			if self.scheduleIsOn:
-				if self.indoorTemperature <= (self.occupiedHeat.getSetpoint() - self.offset): # Turn on heat
-					self.fanIsOn = True
-					self.heatIsOn = True
-					self.coolIsOn = False
+				if self.indoorTemperature < (self.occupiedHeat.getSetpoint() - self.offset): # Turn on heat
+					self.output.enableHeat()
 				else:
-					self.fanIsOn = False
-					self.heatIsOn = False
-					self.coolIsOn = False
+					self.output.disableHeat()
 			else: # Schedule is off
-				if self.indoorTemperature <= (self.unoccupiedHeat.getSetpoint() - self.offset): # Turn on heat
-					self.fanIsOn = True
-					self.heatIsOn = True
-					self.coolIsOn = False
+				if self.indoorTemperature < (self.unoccupiedHeat.getSetpoint() - self.offset): # Turn on heat
+					self.output.enableHeat()
 				else:
-					self.fanIsOn = False
-					self.heatIsOn = False
-					self.coolIsOn = False
+					self.output.disableHeat()
+		
 
 	def updateSetpoints(self):
 		self.__getSetpoints()
