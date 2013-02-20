@@ -34,8 +34,10 @@ class PiStat(object):
 
         # Get the sensor readings
         self.data = self.sensor.getSensorData()
-        self.curTemperature = self.data['Temp']
-        self.curHumidity = self.data['Hum']
+	
+	if self.data != None:
+        	self.curTemperature = self.data['Temp']
+        	self.curHumidity = self.data['Hum']
 
         if self.curTemperature != self.prevTemperature:
             self.prevTemperature = self.curTemperature

@@ -1,6 +1,8 @@
 from SensorPoller import SensorPoller
 
 class Sensor(object):
+	temperature = 0
+	humidity = 0
 	
 	def __init__(self):
 		self.poller = SensorPoller()
@@ -13,9 +15,10 @@ class Sensor(object):
 	def pollSensor(self):
 		self.poller.updateSensorData()
 		self.data = self.poller.getSensorData()
-
-		self.temperature = self.data['Temp']
-		self.humidity = self.data['Hum']
+		
+		if self.data:
+			self.temperature = self.data['Temp']
+			self.humidity = self.data['Hum']
 
 	# Returns a dictionary with both readings
 	def getSensorData(self):
