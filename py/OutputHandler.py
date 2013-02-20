@@ -3,11 +3,11 @@ import ast
 
 class OutputHandler(object):
 
-	fanPin = 1
+	fanPin = 0
 	fanOutput = False
-	heatPin = 2
+	heatPin = 1
 	heatOutput = False
-	coolPin = 3
+	coolPin = 2
 	coolOutput = False
 
 	outputOn = 1
@@ -39,27 +39,27 @@ class OutputHandler(object):
 	enabling heat or cool as well.
 	"""
 	def enableFan(self):
-		process = subprocess.Popen([self.gpioCommand, self.write, self.fanPin, self.outputOn], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOn)], stdout=subprocess.PIPE)
 
 	"""
 	The fan should be disabled after heat or cool is disabled. Ideally, there should be a small delay after
 	disabling heat or cool as well.
 	"""
 	def disableFan(self):
-		process = subprocess.Popen([self.gpioCommand, self.write, self.fanPin, self.outputOff], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOff)], stdout=subprocess.PIPE)
 
 	def enableCool(self):
 		self.enableFan()
-		process = subprocess.Popen([self.gpioCommand, self.write, self.coolPin, self.outputOn], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.coolPin), str(self.outputOn)], stdout=subprocess.PIPE)
 
 	def disableCool(self):
-		process = subprocess.Popen([self.gpioCommand, self.write, self.coolPin, self.outputOff], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.coolPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.disableFan()
 
 	def enableHeat(self):
 		self.enableFan()
-		process = subprocess.Popen([self.gpioCommand, self.write, self.heatPin, self.outputOn], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOn)], stdout=subprocess.PIPE)
 
 	def disableHeat(self):
-		process = subprocess.Popen([self.gpioCommand, self.write, self.heatPin, self.outputOff], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.disableFan()
