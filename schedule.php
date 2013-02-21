@@ -16,8 +16,8 @@
       $occHeat = $row['OccupiedHeat'];
       $unoccHeat = $row['UnoccupiedHeat'];
 
-      $db = null;*/
-    }
+      $db = null;
+    }*/
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
