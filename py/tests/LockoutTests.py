@@ -1,7 +1,7 @@
 import unittest
-import sys
-sys.path.append('../')
-from Lockout import Lockout
+#import sys
+#sys.path.append('../')
+from py.Lockout import Lockout
 
 class LockoutTests(unittest.TestCase):
 
