@@ -16,6 +16,10 @@ class Sensor(object):
 		self.poller.updateSensorData()
 		self.data = self.poller.getSensorData()
 		
+		"""
+		If the dictionary returned from the SensorPoller is empty, then
+		do not update the temperature/humidity.
+		"""
 		if self.data:
 			self.temperature = self.data['Temp']
 			self.humidity = self.data['Hum']

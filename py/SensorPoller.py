@@ -2,12 +2,17 @@ import subprocess
 import ast
 
 class SensorPoller(object):
-	_instance = None
+	data = {}
+	
+	# Default GPIO Pins
 	defaultSensorPin = 4
 	defaultSensorType = 11
-	data = {}
+
+	# GPIO Pin Bounds
 	maxWiringPiPins = 16
 	firstWiringPiPin = 0
+
+	# shell commands
 	sensorProgramLocation = "./../Adafruit_DHT"
 	sudo = "sudo"
 
@@ -39,7 +44,7 @@ class SensorPoller(object):
 		self.data = ast.literal_eval(out)
 		
 		# Convert the temperature from C to F -> C * 9/5 + 32 = F
-		if self.data:
+		if self.data: # False if the dictionary is empty
 			self.data['Temp'] = self.data['Temp'] * 9/5 + 32
 
 	def getSensorData(self):

@@ -7,6 +7,7 @@ class PiStat(object):
 
     prevTemperature = 0
     curTemperature = 0
+    prevHumidity = 0
     curHumidity = 0
 
     def __init__(self):
@@ -35,7 +36,8 @@ class PiStat(object):
         # Get the sensor readings
         self.data = self.sensor.getSensorData()
 	
-	if self.data != None:
+        # Only update temperatures if the dictionary is not empty
+        if self.data:
         	self.curTemperature = self.data['Temp']
         	self.curHumidity = self.data['Hum']
 
