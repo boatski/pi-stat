@@ -2,22 +2,59 @@
 
   <?php
 
-    /*ini_set('display_errors',1);
+    ini_set('display_errors',1);
     error_reporting(E_ALL);
 
     $db = new PDO('sqlite:db/pi-stat.db') or die("fail to connect db");
 
-    $result = $db->query('SELECT * FROM Thermostat');
+    $result = $db->query("SELECT * FROM Schedule;");
+
+    $data = array();
 
     foreach ($result as $row) {
 
-      $occCool = $row['OccupiedCool'];
-      $unoccCool = $row['UnoccupiedCool'];
-      $occHeat = $row['OccupiedHeat'];
-      $unoccHeat = $row['UnoccupiedHeat'];
+      $day = $row['Day'];
+      $startTime = $row['StartTime'];
+      $stopTime = $row['StopTime'];
 
-      $db = null;
-    }*/
+      // Split hours and minutes
+      $startTimeSplit = explode(':', $startTime);
+      $stopTimeSplit = explode(':', $stopTime);
+
+      $startPeriod = 'am';
+      $stopPeriod = 'am';
+
+      // Convert to 12 hour clock and set period.
+      if (intval($startTimeSplit[0] == 0))
+      {
+        $startPeriod = 'am';
+        $startTimeSplit[0] = 12;
+      } else if (intval($startTimeSplit[0]) > 12)
+      {
+        $startPeriod = 'pm';
+        $startTimeSplit[0] = intval($startTimeSplit[0]) - 12;
+      }// end if
+
+      // Recombine hours and minutes
+      $startTime = $startTimeSplit[0] . ':' . $startTimeSplit[1];
+
+      if (intval($stopTimeSplit[0]) > 12)
+      {
+        $stopPeriod = 'pm';
+        $stopTimeSplit[0] = intval($stopTimeSplit[0]) - 12;
+      }// end if
+
+      // Recombine hours and minutes
+      $stopTime = $stopTimeSplit[0] . ':' . $stopTimeSplit[1];
+
+      $data[$day . '-start-time'] = $startTime;
+      $data[$day . '-stop-time'] = $stopTime;
+      $data[$day . '-start-period'] = $startPeriod;
+      $data[$day . '-stop-period'] = $stopPeriod;
+
+    }// end
+
+    $db = null;
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -61,7 +98,7 @@
   		</ul>
     </div>
   </div>
-  <div class="test"></div>
+  <div id="test"></div>
   <form method="POST" action="ajax/updateSchedule.php" id="schedule">
     <div class="row collapse">
       <div class="twelve columns centered">
@@ -153,31 +190,31 @@
           </div>
 
           <div class="time-footers one columns">
-            <span id="monday-start-times">7:00</span><span id="monday-start-period">am</span>
+            <span id="monday-start-times"><?php echo $data['monday-start-time'] ?></span><span id="monday-start-period"><?php echo $data['monday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="tuesday-start-times">7:00</span><span id="tuesday-start-period">am</span>
+            <span id="tuesday-start-times"><?php echo $data['tuesday-start-time'] ?></span><span id="tuesday-start-period"><?php echo $data['tuesday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="wednesday-start-times">7:00</span><span id="wednesday-start-period">am</span>
+            <span id="wednesday-start-times"><?php echo $data['wednesday-start-time'] ?></span><span id="wednesday-start-period"><?php echo $data['wednesday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="thursday-start-times">7:00</span><span id="thursday-start-period">am</span>
+            <span id="thursday-start-times"><?php echo $data['thursday-start-time'] ?></span><span id="thursday-start-period"><?php echo $data['thursday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="friday-start-times">7:00</span><span id="friday-start-period">am</span>
+            <span id="friday-start-times"><?php echo $data['friday-start-time'] ?></span><span id="friday-start-period"><?php echo $data['friday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="saturday-start-times">7:00</span><span id="saturday-start-period">am</span>
+            <span id="saturday-start-times"><?php echo $data['saturday-start-time'] ?></span><span id="saturday-start-period"><?php echo $data['saturday-start-period'] ?></span>
           </div>
 
           <div class="time-footers one columns end">
-            <span id="sunday-start-times">7:00</span><span id="sunday-start-period">am</span>
+            <span id="sunday-start-times"><?php echo $data['sunday-start-time'] ?></span><span id="sunday-start-period"><?php echo $data['sunday-start-period'] ?></span>
           </div>
         </div><!-- end row -->
 
@@ -187,31 +224,31 @@
           </div>
 
           <div class="time-footers one columns">
-            <span id="monday-stop-times">7:00</span><span id="monday-stop-period">pm</span>
+            <span id="monday-stop-times"><?php echo $data['monday-stop-time'] ?></span><span id="monday-stop-period"><?php echo $data['monday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="tuesday-stop-times">7:00</span><span id="tuesday-stop-period">pm</span>
+            <span id="tuesday-stop-times"><?php echo $data['tuesday-stop-time'] ?></span><span id="tuesday-stop-period"><?php echo $data['tuesday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="wednesday-stop-times">7:00</span><span id="wednesday-stop-period">pm</span>
+            <span id="wednesday-stop-times"><?php echo $data['wednesday-stop-time'] ?></span><span id="wednesday-stop-period"><?php echo $data['wednesday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="thursday-stop-times">7:00</span><span id="thursday-stop-period">pm</span>
+            <span id="thursday-stop-times"><?php echo $data['thursday-stop-time'] ?></span><span id="thursday-stop-period"><?php echo $data['thursday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="friday-stop-times">7:00</span><span id="friday-stop-period">pm</span>
+            <span id="friday-stop-times"><?php echo $data['friday-stop-time'] ?></span><span id="friday-stop-period"><?php echo $data['friday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns">
-            <span id="saturday-stop-times">7:00</span><span id="saturday-stop-period">pm</span>
+            <span id="saturday-stop-times"><?php echo $data['saturday-stop-time'] ?></span><span id="saturday-stop-period"><?php echo $data['saturday-stop-period'] ?></span>
           </div>
 
           <div class="time-footers one columns end">
-            <span id="sunday-stop-times">7:00</span><span id="sunday-stop-period">pm</span>
+            <span id="sunday-stop-times"><?php echo $data['sunday-stop-time'] ?></span><span id="sunday-stop-period"><?php echo $data['sunday-stop-period'] ?></span>
           </div>
         </div><!-- end row -->
 

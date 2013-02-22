@@ -1,8 +1,19 @@
  $(document).ready(function() 
  {
  
+  setBarPositions();
   setDraggableAndResizable();
 
+  function setBarPositions()
+  {
+    var data = getScheduleTimes();
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
+    
+
+
+
+  }
 
   function setDraggableAndResizable()
   {
@@ -82,6 +93,7 @@
     $(barDayStopTimes).text(stopHours + ':' + pad2(stopMinutes));
   }// end updateTimes(bar)
 
+  // Sets the time to am or pm.
   function checkPeriod(hour)
   {
     if (hour < 12 || hour == 24)
@@ -93,29 +105,61 @@
     }
   }
 
+  // Adds a second zero to a number if it is < 10
   function pad2(number) 
   {
       return (number < 10 ? '0' : '') + number;
   }
 
-  /*$("#thermostat").submit( function() {
-    var formData = $('#thermostat').serialize();
+  $("#schedule").submit( function() {
+    var scheduleData = getScheduleTimes();
 
     // Update Thermostat table with new form values.
-      $.ajax( {
-        type: "POST",
-        url: $("#thermostat").attr( 'action' ),
-        data: formData,
-        fail: function(xhr, status, error) {
-        var err = eval("(" + xhr.responseText + ")");
-        alert(err.Message);
+    $.ajax( {
+      type: "POST",
+      url: $("#schedule").attr( 'action' ),
+      data: scheduleData,
+      fail: function(xhr, status, error) {
+      var err = eval("(" + xhr.responseText + ")");
+      alert(err.Message);
       },
-        success: function( response ) {
-          console.log("Success");
-        }
-      });
-      return false;
-    } );*/
- 
+      success: function( response ) {
+        $('#test').html(response);
+        console.log("Success");
+      }
+    });
+    return false;
+  });
+
+  function getScheduleTimes()
+  {
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    var data = {};
+    for (var i = 0; i < days.length; i++)
+    {
+      var startTime = $('#' + days[i] + '-start-times').text();
+      var stopTime = $('#' + days[i] + '-stop-times').text();
+
+      var startPeriod = $('#' + days[i] + '-start-period').text();
+      var stopPeriod = $('#' + days[i] + '-stop-period').text();
+
+      // Split hours and minutes
+      var startTimeSplit = startTime.split(':');
+      var stopTimeSplit = stopTime.split(':');
+
+      // Convert to 24 hour time
+      if (startPeriod === 'pm') startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12; 
+      if (stopPeriod === 'pm') stopTimeSplit[0] = parseInt(stopTimeSplit[0]) + 12;
+
+      // Rejoin hour and minutes
+      startTime = startTimeSplit[0] + ':' + startTimeSplit[1];
+      stopTime = stopTimeSplit[0] + ':' + stopTimeSplit[1];
+
+      data[days[i] + '-start-time'] = startTime;
+      data[days[i] + '-stop-time'] = stopTime;
+
+    }
+    return data;
+  }
  
  });
