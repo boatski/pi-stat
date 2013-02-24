@@ -21,27 +21,37 @@
       $startTimeSplit = explode(':', $startTime);
       $stopTimeSplit = explode(':', $stopTime);
 
-      $startPeriod = 'am';
-      $stopPeriod = 'am';
+      $startPeriod = '';
+      $stopPeriod = '';
 
       // Convert to 12 hour clock and set period.
       if (intval($startTimeSplit[0] == 0))
       {
         $startPeriod = 'am';
         $startTimeSplit[0] = 12;
-      } else if (intval($startTimeSplit[0]) > 11)
+      } else if (intval($startTimeSplit[0] > 11))
       {
         $startPeriod = 'pm';
         if (intval($startTimeSplit[0]) > 12) $startTimeSplit[0] = intval($startTimeSplit[0]) - 12;
+      } else
+      {
+        $startPeriod = 'am';
       }// end if
 
       // Combine hours and minutes
       $startTime = $startTimeSplit[0] . ':' . $startTimeSplit[1];
 
-      if (intval($stopTimeSplit[0]) > 12)
+      if (intval($stopTimeSplit[0]) == 24)
+      {
+        $stopPeriod = 'am';
+        if (intval($stopTimeSplit[0]) > 12) $stopTimeSplit[0] = intval($stopTimeSplit[0]) - 12;
+      } else if (intval($stopTimeSplit[0]) > 11)
       {
         $stopPeriod = 'pm';
-        $stopTimeSplit[0] = intval($stopTimeSplit[0]) - 12;
+        if (intval($stopTimeSplit[0]) > 12) $stopTimeSplit[0] = intval($stopTimeSplit[0]) - 12;
+      } else
+      {
+        $stopPeriod = 'am';
       }// end if
 
       // Combine hours and minutes

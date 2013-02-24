@@ -1,12 +1,18 @@
  $(document).ready(function() 
  {
  
+
+ /********************
+  On Page Load
+ ********************/
+
   setDraggableAndResizable();
   setBarPositions();
 
   function setBarPositions()
   {
     var data = getScheduleTimes();
+    console.log(data);
     var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
     for (var i = 0; i < days.length; i++)
@@ -24,14 +30,20 @@
       var startTimeMinutes = startTimeSplit[1];
       var startTimeInMinutes = parseInt(startTimeHours*60) + parseInt(startTimeMinutes);
 
+      var stopTimeHours = stopTimeSplit[0];
+      var stopTimeMinutes = stopTimeSplit[1];
+      var stopTimeInMinutes = parseInt(stopTimeHours*60) + parseInt(stopTimeMinutes);
+
       // Calculate and set start position
-      var startTop = (startTimeInMinutes / 30) * 10;
-      $('#' + bar).css('top', startTop);
-    }
+      var barTop = (startTimeInMinutes / 30) * 10;
+      $('#' + bar).css('top', barTop);
 
-
-
-  }
+      // Calculate and set bar height
+      var onTimeInMinutes = stopTimeInMinutes - startTimeInMinutes;
+      var barHeight = (onTimeInMinutes / 30) * 10;
+      $('#' + bar).css('height', barHeight);
+    }// end for
+  }// end setBarPositions()
 
   /* 
     Allows the green bars to be draggable and resizable within the gray bar.
@@ -73,6 +85,10 @@
         $('.resizable').css('width', width);
       }});
   }// end setDraggableAndResizable
+
+/********************
+  Schedule Time Changes
+********************/
 
   function updateTimes(bar)
   {
@@ -133,6 +149,10 @@
       return (number < 10 ? '0' : '') + number;
   }
 
+  /*
+  Called when the schedule submit button is clicked. Schedule times are grabbed and
+  then the database is updated.
+  */
   $("#schedule").submit( function() {
     var scheduleData = getScheduleTimes();
 
@@ -170,21 +190,31 @@
       var stopTimeSplit = stopTime.split(':');
 
       // Convert to 24 hour time
-      if (startTimeSplit[0] > 12 && startPeriod === 'pm') startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12; 
-      if (stopPeriod === 'pm') stopTimeSplit[0] = parseInt(stopTimeSplit[0]) + 12;
+      if (parseInt(startTimeSplit[0]) === 12 && startPeriod === 'am')
+      {
+        startTimeSplit[0] = 0;
+      } else if (parseInt(startTimeSplit[0]) > 12 && startPeriod === 'pm')
+      {
+        startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12;
+      }// end if
 
-      // Check for 12am start
-      //if (startTimeSplit[0] == 12 && startPeriod == 'am') startTimeSplit[0] -= 12;
+      if (parseInt(stopTimeSplit[0]) === 12 && stopPeriod === 'am')
+      {
+        stopTimeSplit[0] = parseInt(stopTimeSplit[0]) + 12;
+      } else if (parseInt(stopTimeSplit[0]) !== 12 && stopPeriod === 'pm')
+      {
+        stopTimeSplit[0] = parseInt(stopTimeSplit[0]) + 12;
+      }// end if
 
-      // Rejoin hour and minutes
+      // Combine hour and minutes
       startTime = startTimeSplit[0] + ':' + startTimeSplit[1];
       stopTime = stopTimeSplit[0] + ':' + stopTimeSplit[1];
 
       data[days[i] + '-start-time'] = startTime;
       data[days[i] + '-stop-time'] = stopTime;
 
-    }
+    }// end for
     return data;
-  }
+  }// end getScheduleTimes()
  
  });

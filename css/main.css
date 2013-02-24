@@ -11,7 +11,11 @@
 .not-resizable {
 	background-color: #D6D6D6;
 	height: 480px;
+	width: 100%;
 	margin-right: 20px;
+	border-width: 1px;
+	border-color: black;
+	border-style: solid;
 }
 
 .resizable {
