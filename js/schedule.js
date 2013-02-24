@@ -1,20 +1,42 @@
  $(document).ready(function() 
  {
  
-  setBarPositions();
   setDraggableAndResizable();
+  setBarPositions();
 
   function setBarPositions()
   {
     var data = getScheduleTimes();
     var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-    
+    for (var i = 0; i < days.length; i++)
+    {
+      var bar = days[i];
+
+      var startTime = data[bar + '-start-time'];
+      var startTimeSplit = startTime.split(':');
+
+      var stopTime = data[bar + '-stop-time'];
+      var stopTimeSplit = stopTime.split(':');
+
+      // Convert hours to minutes
+      var startTimeHours = startTimeSplit[0];
+      var startTimeMinutes = startTimeSplit[1];
+      var startTimeInMinutes = parseInt(startTimeHours*60) + parseInt(startTimeMinutes);
+
+      // Calculate and set start position
+      var startTop = (startTimeInMinutes / 30) * 10;
+      $('#' + bar).css('top', startTop);
+    }
 
 
 
   }
 
+  /* 
+    Allows the green bars to be draggable and resizable within the gray bar.
+    10px = 30 mins, 480px = 24 hours
+  */
   function setDraggableAndResizable()
   {
     var width = $('.resizable').width();
@@ -103,7 +125,7 @@
     {
       return 'pm';
     }
-  }
+  }// end checkPeriod(hour)
 
   // Adds a second zero to a number if it is < 10
   function pad2(number) 
@@ -148,8 +170,11 @@
       var stopTimeSplit = stopTime.split(':');
 
       // Convert to 24 hour time
-      if (startPeriod === 'pm') startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12; 
+      if (startTimeSplit[0] > 12 && startPeriod === 'pm') startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12; 
       if (stopPeriod === 'pm') stopTimeSplit[0] = parseInt(stopTimeSplit[0]) + 12;
+
+      // Check for 12am start
+      //if (startTimeSplit[0] == 12 && startPeriod == 'am') startTimeSplit[0] -= 12;
 
       // Rejoin hour and minutes
       startTime = startTimeSplit[0] + ':' + startTimeSplit[1];

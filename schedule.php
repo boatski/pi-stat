@@ -29,13 +29,13 @@
       {
         $startPeriod = 'am';
         $startTimeSplit[0] = 12;
-      } else if (intval($startTimeSplit[0]) > 12)
+      } else if (intval($startTimeSplit[0]) > 11)
       {
         $startPeriod = 'pm';
-        $startTimeSplit[0] = intval($startTimeSplit[0]) - 12;
+        if (intval($startTimeSplit[0]) > 12) $startTimeSplit[0] = intval($startTimeSplit[0]) - 12;
       }// end if
 
-      // Recombine hours and minutes
+      // Combine hours and minutes
       $startTime = $startTimeSplit[0] . ':' . $startTimeSplit[1];
 
       if (intval($stopTimeSplit[0]) > 12)
@@ -44,7 +44,7 @@
         $stopTimeSplit[0] = intval($stopTimeSplit[0]) - 12;
       }// end if
 
-      // Recombine hours and minutes
+      // Combine hours and minutes
       $stopTime = $stopTimeSplit[0] . ':' . $stopTimeSplit[1];
 
       $data[$day . '-start-time'] = $startTime;
