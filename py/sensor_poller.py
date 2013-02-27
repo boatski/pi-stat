@@ -37,7 +37,7 @@ class SensorPoller(object):
 	def updateSensorData(self):
 		process = subprocess.Popen([self.sudo, self.sensorProgramLocation, str(self.defaultSensorType), str(self.defaultSensorPin)], stdout=subprocess.PIPE)
 		out, err = process.communicate()
-		
+		#out = "'Temp':24, 'Hum':35"
 		out = "{" + out + "}"
 
 		# Convert the string into a dictionary

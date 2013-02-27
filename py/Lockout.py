@@ -1,4 +1,4 @@
-from Setpoint import Setpoint
+from setpoint import Setpoint
 
 """
 An outdoor temperature lockout is used to either disable heat or disable cool. For example,

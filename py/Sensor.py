@@ -1,4 +1,4 @@
-from SensorPoller import SensorPoller
+from sensor_poller import SensorPoller
 
 class Sensor(object):
 	temperature = 0

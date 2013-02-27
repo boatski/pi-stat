@@ -1,14 +1,9 @@
 import threading
 import atexit
-from Sensor import Sensor
-from Thermostat import Thermostat
+from sensor import Sensor
+from thermostat import Thermostat
 
 class PiStat(object):
-
-    prevTemperature = 0
-    curTemperature = 0
-    prevHumidity = 0
-    curHumidity = 0
 
     def __init__(self):
         # Time intervals for various functions in seconds
@@ -33,21 +28,7 @@ class PiStat(object):
         # Poll the sensor to grab updated readings
         self.sensor.pollSensor()
 
-        # Get the sensor readings
-        self.data = self.sensor.getSensorData()
-	
-        # Only update temperatures if the dictionary is not empty
-        if self.data:
-        	self.curTemperature = self.data['Temp']
-        	self.curHumidity = self.data['Hum']
-
-        if self.curTemperature != self.prevTemperature:
-            self.prevTemperature = self.curTemperature
-
-            print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
-            self.tstat.control()
-        else:
-            print "Same temperature."
+        self.tstat.control()
 
         # call pollSensor() again in 'sensorPollInterval' seconds
         threading.Timer(self.sensorPollInterval, self.pollSensor).start()
