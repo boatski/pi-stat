@@ -15,6 +15,7 @@
       $unoccCool = $row['UnoccupiedCool'];
       $occHeat = $row['OccupiedHeat'];
       $unoccHeat = $row['UnoccupiedHeat'];
+      $lockout = $row['OutdoorLockout'];
 
       $db = null;
     }
@@ -32,6 +33,7 @@
   <meta name="viewport" content="width=device-width" />
 
   <title>Pi-Stat</title>
+  <div id="test"></div>
   
   <!-- Included CSS Files (Compressed) -->
   <link rel="stylesheet" href="css/foundation/foundation.min.css">
@@ -66,37 +68,48 @@
   <form method="POST" action="ajax/updateThermostat.php" id="thermostat">
 
     <div class="form-elements row">
-      <div class="six columns">
+      <div class="eight columns">
         <div class="row collapse">
-          <div class="offset-by-two three columns">
+          <div class="column-margin offset-by-two three columns">
             <label>Occupied</label>
           </div>
-          <div class="offset-by-one three columns end">
+          <div class="column-margin three columns">
             <label>Unoccupied</label>
+          </div>
+          <div class="three columns end">
+            <label>Outdoor Lockout</label>
           </div>
         </div>
       </div>
     </div><!-- end row -->
 
     <div class="form-elements row">
-      <div class="six columns">
+      <div class="eight columns">
         <div class="row collapse">
-          <div class="two mobile-two column">
+          <div class="two columns">
             <label>Cooling</label>
           </div>
-          <div class="two mobile-one columns">
+          <div class="two columns">
             <input type="number" value="<?php echo $occCool ?>" min="60" max="80" placeholder="72" name="occupied-cool" id="occupied-cool" required>
             <span class="error" aria-live="polite"></span>
           </div>
-          <div class="one mobile-one columns">
+          <div class="column-margin one columns">
             <span class="postfix">&deg;F</span>
           </div>
 
-          <div class="two mobile-one columns offset-by-one">
-            <input type="number" value="<?php echo $unoccCool ?>" min="60" max="80" placeholder="72" name="unoccupied-cool" id="unoccupied-cool" required>
+          <div class="two columns">
+            <input type="number" value="<?php echo $unoccCool ?>" min="60" max="80" placeholder="76" name="unoccupied-cool" id="unoccupied-cool" required>
             <span class="error" aria-live="polite"></span>
           </div>
-          <div class="one mobile-one columns end">
+          <div class="column-margin one columns">
+            <span class="postfix">&deg;F</span>
+          </div>
+
+          <div class="two columns">
+            <input type="number" value="<?php echo $lockout ?>" min="50" max="70" placeholder="60" name="outdoor-lockout" id="outdoor-lockout" required>
+            <span class="error" aria-live="polite"></span>
+          </div>
+          <div class="one columns end">
             <span class="postfix">&deg;F</span>
           </div>
         </div>
@@ -104,24 +117,24 @@
     </div><!-- end row -->
 
     <div class="form-elements row">
-      <div class="six columns">
+      <div class="eight columns">
         <div class="row collapse">
-          <div class="two mobile-two column">
+          <div class="two column">
             <label>Heating</label>
           </div>
-          <div class="two mobile-one columns">
+          <div class="two columns">
             <input type="number" value="<?php echo $occHeat ?>" min="60" max="80" placeholder="72" name="occupied-heat" id="occupied-heat" required>
             <span class="error" aria-live="polite"></span>
           </div>
-          <div class="one mobile-one columns">
+          <div class="column-margin one columns">
             <span class="postfix">&deg;F</span>
           </div>
 
-          <div class="two mobile-one columns offset-by-one">
+          <div class="two columns">
             <input type="number" value="<?php echo $unoccHeat ?>" min="60" max="80" placeholder="72" name="unoccupied-heat" id="unoccupied-heat" required>
             <span class="error" aria-live="polite"></span>
           </div>
-          <div class="one mobile-one columns end">
+          <div class="one columns end">
             <span class="postfix">&deg;F</span>
           </div>
         </div>
@@ -129,8 +142,15 @@
     </div><!-- end row -->
 
     <div class="row">
-      <div class="six columns">
-          <input type="submit" name="submit" id="submit" class="button">
+      <div class="eight columns">
+          <div class="row collapse">
+            <div class="two columns">
+              <input type="submit" name="submit" id="submit" class="button">
+            </div>
+            <div class="success two columns end">
+              <p>Success!</p>
+            </div>
+          </div>
       </div>
     </div><!-- end row -->
   </form><!-- end form -->
