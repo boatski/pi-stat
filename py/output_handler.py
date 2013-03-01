@@ -40,6 +40,7 @@ class OutputHandler(object):
 	"""
 	def enableFan(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		self.fanOutput = True
 
 	"""
 	The fan should be disabled after heat or cool is disabled. Ideally, there should be a small delay after
@@ -47,22 +48,27 @@ class OutputHandler(object):
 	"""
 	def disableFan(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOff)], stdout=subprocess.PIPE)
+		self.fanOutput = False
 
 	def enableCool(self):
 		self.enableFan()
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.coolPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		self.coolOutput = True
 
 	def disableCool(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.coolPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.disableFan()
+		self.coolOutput = False
 
 	def enableHeat(self):
 		self.enableFan()
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		self.heatOutput = True
 
 	def disableHeat(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.disableFan()
+		self.heatOutput = False
 
 	"""
 	Used for debugging. Prints the status of all three outputs.
