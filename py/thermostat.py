@@ -1,6 +1,7 @@
 import sqlite3 as lite
 import sys
 import datetime
+import atexit
 from setpoint import Setpoint
 from lockout import Lockout
 from sensor import Sensor
@@ -21,6 +22,9 @@ class Thermostat(object):
 	scheduleIsOn = False
 	
 	def __init__(self, sensor):
+        # Call exitCleanup() when the program is ended or if it crashes
+        atexit.register(self.exitCleanup)
+        
 		self.sensor = sensor
 		self.schedule = Schedule()
 		self.output = OutputHandler()
@@ -132,7 +136,12 @@ class Thermostat(object):
  		else:
  			self.scheduleIsOn = False
 
-
+ 	"""
+    Ensure that all three outputs are off when the program is ended or if it crashes.
+    """
+    def exitCleanup(self):
+        print 'Shutting down...\nDisabling all outputs...'
+        self.output.disableAllOutputs()
 
 
 

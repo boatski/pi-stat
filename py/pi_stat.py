@@ -2,6 +2,7 @@ import threading
 import atexit
 from sensor import Sensor
 from thermostat import Thermostat
+from output_handler import OutputHandler
 
 class PiStat(object):
 
@@ -35,10 +36,12 @@ class PiStat(object):
 
 
     """
-    Ensure that all three outputs are off if the program is ended or if it crashes.
+    Ensure that all three outputs are off when the program is ended or if it crashes.
     """
     def exitCleanup(self):
-        print 'My application is ending!'
+        print 'Shutting down...\nDisabling all outputs...'
+        output = OutputHandler()
+        output.disableAllOutputs()
 
 
 # Start the script
