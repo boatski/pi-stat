@@ -68,4 +68,4 @@ class OutputHandler(object):
 	Used for debugging. Prints the status of all three outputs.
 	"""
 	def printOutputStatus(self):
-		print "Fan: " + fanOutput + ", Heat: " + heatOutput + ", Cool: " + coolOutput
+		print "Fan: " + str(self.fanOutput) + ", Heat: " + str(self.heatOutput) + ", Cool: " + str(self.coolOutput)
