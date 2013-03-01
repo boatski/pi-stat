@@ -49,6 +49,12 @@ class Thermostat(object):
 
 			print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
 
+		self.setOutput()
+		self.output.printOutputStatus()
+
+		
+
+	def setOutput(self):
 		if self.outdoorTemperature >= self.outdoorLockout.getSetpoint(): # If outdoorTemp >= outdoorLockout, do not heat
 			if self.scheduleIsOn:
 				if self.indoorTemperature > (self.occupiedCool.getSetpoint() + self.offset): # Turn on cool
