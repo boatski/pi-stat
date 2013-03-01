@@ -18,7 +18,7 @@ class Thermostat(object):
 	outdoorTemperature = 32
 	offset = 1
 
-	self.scheduleIsOn = False
+	scheduleIsOn = False
 	
 	def __init__(self, sensor):
 		self.sensor = sensor
