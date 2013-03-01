@@ -264,9 +264,16 @@
 
       </div><!-- end col -->
     </div><!-- end row -->
-    <div class="schedule-submit row collapse">
+    <div class="schedule-submit row">
       <div class="twelve columns">
-          <input type="submit" name="submit" id="submit" class="button">
+        <div class="row collapse">
+          <div class="two columns">
+            <input type="submit" name="submit" id="submit" class="button">
+          </div>
+          <div class="success two columns end">
+            <p>Success!</p>
+          </div>
+        </div>
       </div>
     </div><!-- end row -->
   </form>

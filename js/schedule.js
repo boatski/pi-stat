@@ -1,6 +1,7 @@
  $(document).ready(function() 
  {
  
+  $('.success').hide();
 
  /********************
   On Page Load
@@ -149,6 +150,10 @@
       return (number < 10 ? '0' : '') + number;
   }
 
+/********************
+  On Form Submission
+********************/
+
   /*
   Called when the schedule submit button is clicked. Schedule times are grabbed and
   then the database is updated.
@@ -166,8 +171,9 @@
       alert(err.Message);
       },
       success: function( response ) {
-        $('#test').html(response);
-        console.log("Success");
+        $('.success').fadeIn('slow', function() {
+            $(this).fadeOut('slow');
+          });
       }
     });
     return false;
@@ -193,7 +199,7 @@
       if (parseInt(startTimeSplit[0]) === 12 && startPeriod === 'am')
       {
         startTimeSplit[0] = 0;
-      } else if (parseInt(startTimeSplit[0]) > 12 && startPeriod === 'pm')
+      } else if (parseInt(startTimeSplit[0]) !== 12 && startPeriod === 'pm')
       {
         startTimeSplit[0] = parseInt(startTimeSplit[0]) + 12;
       }// end if
