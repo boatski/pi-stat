@@ -4,7 +4,11 @@
 
 /***** Thermostat *****/
 .form-elements {
-	text-align: center;
+	text-align: center;;
+}
+
+.column-margin {
+	margin-right: 15px;
 }
 
 /***** Schedule *****/
