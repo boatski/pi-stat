@@ -63,3 +63,9 @@ class OutputHandler(object):
 	def disableHeat(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.disableFan()
+
+	"""
+	Used for debugging. Prints the status of all three outputs.
+	"""
+	def printOutputStatus(self):
+		print "Fan: " + fanOutput + ", Heat: " + heatOutput + ", Cool: " + coolOutput
