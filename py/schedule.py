@@ -34,6 +34,7 @@ class Schedule(object):
 		self.scheduleDays[day] = schedule
 
 	def getScheduleForToday(self):
+		self.updateSchedule()
 		now = datetime.datetime.now()
 		weekday = now.weekday() # returns an int 0-6
 		today = self.days[weekday]
