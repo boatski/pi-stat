@@ -13,12 +13,14 @@ class Thermostat(object):
 	indoorTemperature = 0
 	indoorHumidity = 0
 	prevTemperature = 0
-	prevHumidity = 0
 
 	outdoorTemperature = 32
 	offset = 1
 
-	scheduleIsOn = False
+	fanIsOn = False
+	heatIsOn = False
+	coolIsOn = False
+	scheduleIsOn = True
 	
 	def __init__(self, sensor):
 		self.sensor = sensor
@@ -43,18 +45,13 @@ class Thermostat(object):
 			self.indoorTemperature = self.data['Temp']
 			self.indoorHumidity = self.data['Hum']
 
-		if self.indoorTemperature != self.prevTemperature or self.indoorHumidity != self.prevHumidity:
+		if self.indoorTemperature != self.prevTemperature:
 			self.prevTemperature = self.indoorTemperature
-			self.prevHumidity = self.indoorHumidity
 
 			print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
+		else:
+			print "Same temperature."
 
-		self.setOutput()
-		self.output.printOutputStatus()
-
-		
-
-	def setOutput(self):
 		if self.outdoorTemperature >= self.outdoorLockout.getSetpoint(): # If outdoorTemp >= outdoorLockout, do not heat
 			if self.scheduleIsOn:
 				if self.indoorTemperature > (self.occupiedCool.getSetpoint() + self.offset): # Turn on cool
@@ -112,7 +109,7 @@ class Thermostat(object):
 	"""
  	def checkSchedule(self):
  		now = datetime.datetime.now()
- 		self.todaysSchedule = self.schedule.getScheduleForToday()
+ 		todaysSchedule = self.schedule.getScheduleForToday()
 
  		# Split hours and minutes
  		scheduleOn = todaysSchedule.getStartTime().split(':', 1)
