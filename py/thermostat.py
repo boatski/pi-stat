@@ -114,7 +114,7 @@ class Thermostat(object):
 	"""
  	def checkSchedule(self):
  		now = datetime.datetime.now()
- 		self.todaysSchedule = self.schedule.getScheduleForToday()
+ 		todaysSchedule = self.schedule.getScheduleForToday()
 
  		# Split hours and minutes
  		scheduleOn = todaysSchedule.getStartTime().split(':', 1)
