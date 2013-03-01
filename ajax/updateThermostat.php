@@ -13,12 +13,14 @@
 	    $unoccCool = $_POST['unoccupied-cool'];
 	    $occHeat = $_POST['occupied-heat'];
 	    $unoccHeat = $_POST['unoccupied-heat'];
+	    $lockout = $_POST['outdoor-lockout'];
 
 	    $query = "UPDATE Thermostat 
 	    		  SET OccupiedCool = {$occCool},
 	    		  UnoccupiedCool = {$unoccCool},
 	    		  OccupiedHeat = {$occHeat},
-	    		  UnoccupiedHeat = {$unoccHeat};";
+	    		  UnoccupiedHeat = {$unoccHeat},
+	    		  OutdoorLockout = {$lockout};";
 
 	
 		$db->exec($query);
