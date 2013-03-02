@@ -2,27 +2,6 @@
  {
  	$('.success').hide();
 
- 	$.getJSON("../pi-stat/json/sensor.py", function(data) {
-
-        console.log("echo "+ data);
-        //alert(data); //uncomment this for debug
-        //alert (data.item1+" "+data.item2+" "+data.item3); //further debug
-        $('#test').text(data);
-    });
-
-    /*$.ajax({
-                 type:"GET",
-                 url:"../pi-stat/json/sensor.py",
-                 data: {},
-
-                 success: function(b){
-                    b = jQuery.parseJSON(b);
-
-                    console.log(b);            
-
-                    }
-            });*/
-
 	$("#thermostat").submit( function() {
 		var formData = $('#thermostat').serialize();
 
