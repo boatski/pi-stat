@@ -51,10 +51,11 @@ class Thermostat(object):
 			self.prevTemperature = self.indoorTemperature
 			self.prevHumidity = self.indoorHumidity
 
-			print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
+		print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
 
 		self.setOutput()
 		self.output.printOutputStatus()
+		print "Schedule: " + str(self.scheduleIsOn)
 
 		
 	"""
