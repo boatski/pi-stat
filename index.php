@@ -5,6 +5,7 @@
     ini_set('display_errors',1);
     error_reporting(E_ALL);
 
+    // Get setpoints from the database.
     $db = new PDO('sqlite:db/pi-stat.db') or die("fail to connect db");
 
     $result = $db->query('SELECT * FROM Thermostat');
@@ -18,7 +19,18 @@
       $lockout = $row['OutdoorLockout'];
 
       $db = null;
-    }
+    }// end foreach
+
+    // Poll the temperature sensor and get outdoor temperatures.
+    //$output = exec("python /usr/share/nginx/www/pi-stat/json/sensor.py");
+    $output = exec("python /Users/Boatski/Sites/pi-stat/json/sensor.py");
+    $jsonOutput = json_decode($output);
+
+    $indoorTemperature = $jsonOutput->sensor->indoorTemperature;
+    $indoorHumidity = $jsonOutput->sensor->indoorHumidity;
+
+    $outdoorTemperature = $jsonOutput->weather->current_observation->temp_f;
+    $outdoorHumidity = $jsonOutput->weather->current_observation->relative_humidity;
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -56,6 +68,12 @@
   <div class="row">
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
+      <div>
+        Indoor Temperature: <?php echo $indoorTemperature ?><br />
+        Indoor Humidity: <?php echo $indoorHumidity ?><br />
+        Outdoor Temperature: <?php echo $outdoorTemperature ?><br />
+        Outdoor Humidity: <?php echo $outdoorHumidity ?>
+      </div>
   		<ul class="nav-bar">
   		  <li class="active"><a href="index.php">Thermostat</a></li>
         <li class=""><a href="schedule.php">Schedule</a></li>
