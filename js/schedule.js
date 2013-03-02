@@ -10,6 +10,10 @@
   setDraggableAndResizable();
   setBarPositions();
 
+  /*
+    Sets the position of each bar when the page loads based on the current schedule start
+    and stop times.
+  */
   function setBarPositions()
   {
     var data = getScheduleTimes();
@@ -91,6 +95,10 @@
   Schedule Time Changes
 ********************/
 
+  /*
+    Updates the start and stop times below the bars based on their current positions when
+    they're moved. Also converts to 12 hour time.
+  */
   function updateTimes(bar)
   {
     var barDay = '#' + $(bar).attr('id'); // green bar
@@ -141,14 +149,14 @@
     } else
     {
       return 'pm';
-    }
+    }// end if
   }// end checkPeriod(hour)
 
   // Adds a second zero to a number if it is < 10
   function pad2(number) 
   {
       return (number < 10 ? '0' : '') + number;
-  }
+  }// end pad2
 
 /********************
   On Form Submission
@@ -170,15 +178,19 @@
       var err = eval("(" + xhr.responseText + ")");
       alert(err.Message);
       },
-      success: function( response ) {
+      success: function( response ) 
+      { // Flash 'Success' to notify user on successful submission.
         $('.success').fadeIn('slow', function() {
             $(this).fadeOut('slow');
           });
       }
     });
     return false;
-  });
+  });// end submit
 
+  /*
+    Gets the start and stop times below the bars and converts them to a 24 hour clock.
+  */
   function getScheduleTimes()
   {
     var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
