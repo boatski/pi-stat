@@ -14,9 +14,6 @@ class Sensor(object):
 		self.sensorPoller = SensorPoller()
 		self.weatherPoller = WeatherPoller("Indianapolis", "IN")
 
-		self.pollSensor()
-		self.pollWeather()
-
 	"""
 	Calls the SensorPoller to poll the sensor and update the dictionary with new
 	temperature and humidity values.
