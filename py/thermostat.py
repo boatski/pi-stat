@@ -22,8 +22,8 @@ class Thermostat(object):
 	scheduleIsOn = False
 	
 	def __init__(self, sensor):
-        	# Call exitCleanup() when the program is ended or if it crashes
-        	atexit.register(self.exitCleanup)
+		# Call exitCleanup() when the program is ended or if it crashes
+		atexit.register(self.exitCleanup)
         
 		self.sensor = sensor
 		self.schedule = Schedule()
@@ -137,11 +137,11 @@ class Thermostat(object):
  		else:
  			self.scheduleIsOn = False
 
- 	"""
-    	Ensure that all three outputs are off when the program is ended or if it crashes.
-    	"""
-    	def exitCleanup(self):
-        	print 'Shutting down...\nDisabling all outputs...'
+	"""
+	Ensure that all three outputs are off when the program is ended or if it crashes.
+	"""
+	def exitCleanup(self):
+		print 'Shutting down...\nDisabling all outputs...'
 		self.output.disableAllOutputs()
 
 
