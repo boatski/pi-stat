@@ -27,8 +27,6 @@ class SensorPoller(object):
 		else:
 			self.sensorType = sensorType
 
-		self.updateSensorData()
-
 	""" 
 	Runs the C program to poll the DHT 11 sensor. Output is then parsed into a dictionary. The C
 	program is provided by Adafruit.com
