@@ -13,7 +13,7 @@ class SensorPoller(object):
 	firstWiringPiPin = 0
 
 	# shell commands
-	sensorProgramLocation = "./../../Adafruit_DHT"
+	sensorProgramLocation = "./../Adafruit_DHT"
 	sudo = "sudo"
 
 	def __init__(self, sensorPin = None, sensorType = None):
