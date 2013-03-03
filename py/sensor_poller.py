@@ -17,6 +17,9 @@ class SensorPoller(object):
 	sudo = "sudo"
 
 	def __init__(self, sensorPin = None, sensorType = None):
+		"""
+		Check pin numbers or set to default pin.
+		"""
 		if sensorPin == None or sensorPin > self.maxWiringPiPins or sensorPin < firstWiringPiPin:
 			self.sensorPin = self.defaultSensorPin
 		else:
