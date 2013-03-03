@@ -9,7 +9,7 @@ class WeatherPoller(object):
 	"""
 	Requests the json object from weather underground, reads the response, then returns the json string.
 	"""
-	def pollWeather(self):
+	def updateWeatherData(self):
 		response = urllib2.urlopen('http://api.wunderground.com/api/3dcd75dc0e162700/conditions/q/IN/Indianapolis.json')
 		data = response.read()
 		return json.loads(data)

@@ -1,6 +1,7 @@
 import json
 from sensor_poller import SensorPoller
 from weather_poller import WeatherPoller
+from output_poller import OutputPoller
 
 class Sensor(object):
 	indoorTemperature = 0
@@ -13,9 +14,11 @@ class Sensor(object):
 	def __init__(self):
 		self.sensor = SensorPoller()
 		self.weather = WeatherPoller()
+		self.output = OutputPoller()
 
 		self.pollSensor()
 		self.pollWeather()
+		self.pollOutputs()
 		self.buildJSON()
 
 	"""
@@ -34,8 +37,17 @@ class Sensor(object):
 			self.indoorTemperature = self.data['Temp']
 			self.indoorHumidity = self.data['Hum']
 
+	"""
+	Gets the current weather conditions from weather underground.
+	"""
 	def pollWeather(self):
-		self.jsonWeather = self.weather.pollWeather()
+		self.jsonWeather = self.weather.updateWeatherData()
+
+	"""
+	Gets the current status of the three outputs.
+	"""
+	def pollOutputs(self):
+		self.jsonOutputs = self.outputs.updateOutputData()
 
 	"""
 	Builds the data into a json object.
@@ -44,7 +56,7 @@ class Sensor(object):
 		hum = str(self.indoorHumidity) + '%'
 		jsonSensor = {'indoorTemperature':self.indoorTemperature, 'indoorHumidity':hum}
 
-		jsonCombined = {'sensor':jsonSensor, 'weather':self.jsonWeather}
+		jsonCombined = {'sensor':jsonSensor, 'weather':self.jsonWeather, 'outputs':self.jsonOutputs}
 
 		# Return a json object string to php
 		print json.dumps(jsonCombined)
