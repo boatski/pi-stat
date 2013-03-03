@@ -9,14 +9,21 @@ from schedule import Schedule
 from output_handler import OutputHandler
 
 class Thermostat(object):
-	
+	# SQLite
 	con = None
+
+	# Indoor info
 	indoorTemperature = 0
 	indoorHumidity = 0
-	prevTemperature = 0
-	prevHumidity = 0
+	prevIndoorTemperature = 0
+	prevIndoorHumidity = 0
 
-	outdoorTemperature = 32
+	# Outdoor info
+	outdoorTemperature = 0
+	outdoorHumidity = 0
+	prevOutdoorTemperature = 0
+	prevOutdoorHumidity = 0
+
 	offset = 1
 
 	scheduleIsOn = False
@@ -40,18 +47,25 @@ class Thermostat(object):
 		self.checkSchedule()
 
 		# Get the sensor readings
-		self.data = self.sensor.getSensorData()
+		self.sensorData = self.sensor.getSensorData()
+		self.weatherData = self.sensor.getWeatherData()
 	
 		# Only update temperatures if the dictionary is not empty
-		if self.data:
-			self.indoorTemperature = self.data['Temp']
-			self.indoorHumidity = self.data['Hum']
+		if self.sensorData:
+			self.indoorTemperature = self.sensorData['Temp']
+			self.indoorHumidity = self.sensorData['Hum']
 
-		if self.indoorTemperature != self.prevTemperature or self.indoorHumidity != self.prevHumidity:
-			self.prevTemperature = self.indoorTemperature
-			self.prevHumidity = self.indoorHumidity
+		# Only update temperatures if the dictionary is not empty
+		if self.weatherData:
+			self.outdoorTemperature = self.weatherData['current_observation']['temp_f']
+			self.outdoorHumidity = self.weatherData['current_observation']['relative_humidity']
 
-		print "Temp: " + str(self.sensor.getTemperature()) + "\nHumidity: " + str(self.sensor.getHumidity())
+		if self.indoorTemperature != self.prevIndoorTemperature or self.indoorHumidity != self.prevIndoorHumidity:
+			self.prevIndoorTemperature = self.indoorTemperature
+			self.prevIndoorHumidity = self.indoorHumidity
+
+		print "Indoor Temperature: " + str(self.indoorTemperature) + "\nIndoor Humidity: " + str(self.indoorHumidity)
+		print "Outdoor Temperature: " + str(self.outdoorTemperature) + "\nOutdoor Humidity: " + str(self.outdoorHumidity)
 
 		self.setOutput()
 		self.output.printOutputStatus()
