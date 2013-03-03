@@ -15,6 +15,7 @@ class WeatherPoller(object):
 		response = urllib2.urlopen(self.jsonLink)
 		jsonData = response.read()
 		self.data = json.loads(jsonData)
+		print "Updating weather..."
 
 	def getWeatherData(self):
 		return self.data
