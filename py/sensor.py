@@ -39,7 +39,7 @@ class Sensor(object):
 	temperature/humidity values.
 	"""
 	def pollWeather(self):
-		self.weatherPoller.updateWeatherData()
+		self.weatherPoller.updateWeather()
 		self.weatherData = self.weatherPoller.getWeatherData()
 
 		"""
