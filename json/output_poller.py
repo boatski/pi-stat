@@ -15,13 +15,13 @@ class OutputPoller(object):
 	Reads the status of the three GPIO used as outputs.
 	"""
 	def updateOutputData(self):
-		process = subprocess.Popen([self.sudo, self.gpio, str(self.fanPin)], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpio, self.read, str(self.fanPin)], stdout=subprocess.PIPE)
 		fan, err = process.communicate()
 
-		process = subprocess.Popen([self.sudo, self.gpio, str(self.heatPin)], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpio, self.read, str(self.heatPin)], stdout=subprocess.PIPE)
 		heat, err = process.communicate()
 
-		process = subprocess.Popen([self.sudo, self.gpio, str(self.coolPin)], stdout=subprocess.PIPE)
+		process = subprocess.Popen([self.gpio, self.read, str(self.coolPin)], stdout=subprocess.PIPE)
 		cool, err = process.communicate()
 
 		status = {'fan':fan, 'heat':heat, 'cool':cool}
