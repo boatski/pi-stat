@@ -1,22 +1,28 @@
-import RPi.GPIO as GPIO
+import subprocess
 
 class OutputPoller(object):
 
+	gpio = "gpio"
+	read = "read"
+	fanPin = 0
+	heatPin = 1
+	coolPin = 2
+
 	def __init__(self):
-		GPIO.setmode(GPIO.BCM) # BCM pin numbering
-		GPIO.setwarnings(False) # Disable warnings for GPIO already being setup
-		GPIO.setup(17, GPIO.OUT)
-		GPIO.setup(18, GPIO.OUT)
-		GPIO.setup(27, GPIO.OUT)
-		self.updateOutputData()
+		pass
 
 	"""
 	Reads the status of the three GPIO used as outputs.
 	"""
 	def updateOutputData(self):
-		fan = GPIO.input(17)
-		cool = GPIO.input(27)
-		heat = GPIO.input(18)
+		process = subprocess.Popen([self.sudo, self.gpio, str(self.fanPin)], stdout=subprocess.PIPE)
+		fan, err = process.communicate()
+
+		process = subprocess.Popen([self.sudo, self.gpio, str(self.heatPin)], stdout=subprocess.PIPE)
+		heat, err = process.communicate()
+
+		process = subprocess.Popen([self.sudo, self.gpio, str(self.coolPin)], stdout=subprocess.PIPE)
+		cool, err = process.communicate()
 
 		status = {'fan':fan, 'heat':heat, 'cool':cool}
 		return status
