@@ -18,5 +18,5 @@ class OutputPoller(object):
 		cool = GPIO.input(27)
 		heat = GPIO.input(18)
 
-		status = {'fan':fan, 'heat', heat, 'cool', cool}
+		status = {'fan':fan, 'heat':heat, 'cool', cool}
 		return status
