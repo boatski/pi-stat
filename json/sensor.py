@@ -47,7 +47,7 @@ class Sensor(object):
 	Gets the current status of the three outputs.
 	"""
 	def pollOutputs(self):
-		self.jsonOutputs = self.outputs.updateOutputData()
+		self.jsonOutputs = self.output.updateOutputData()
 
 	"""
 	Builds the data into a json object.
