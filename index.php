@@ -31,6 +31,10 @@
 
     $outdoorTemperature = $jsonOutput->weather->current_observation->temp_f;
     $outdoorHumidity = $jsonOutput->weather->current_observation->relative_humidity;
+
+    $fan = $jsonOutput->outputs->fan;
+    $heat = $jsonOutput->outputs->heat;
+    $cool = $jsonOutput->outputs->cool;
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -72,7 +76,10 @@
         Indoor Temperature: <?php echo $indoorTemperature ?><br />
         Indoor Humidity: <?php echo $indoorHumidity ?><br />
         Outdoor Temperature: <?php echo $outdoorTemperature ?><br />
-        Outdoor Humidity: <?php echo $outdoorHumidity ?>
+        Outdoor Humidity: <?php echo $outdoorHumidity ?><br />
+        Fan: <?php echo $fan ?><br />
+        Heat: <?php echo $heat ?><br />
+        Cool: <?php echo $cool ?><br />
       </div>
   		<ul class="nav-bar">
   		  <li class="active"><a href="index.php">Thermostat</a></li>
