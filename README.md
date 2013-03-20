@@ -12,6 +12,6 @@ History: Unimplemented
 Weather: Weather conditions implemented.  
 
 Current Goal:  
-I hope to have the thermostat and scheduling fully implemented by March 1. (Complete)
-Histories implemented with at least one graph (24 hour temperatures/humidity) by April 1.
+I hope to have the thermostat and scheduling fully implemented by March 1. (Complete)  
+Histories implemented with at least one graph (24 hour temperatures/humidity) by April 1.  
 
