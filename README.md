@@ -5,8 +5,8 @@ A web controlled thermostat powered by a Raspberry Pi.
 
 This project is currently a work in progress. The code you see, while in working condition, may not be suitable for use.  
 
-Current Feature Status as of 2/26:  
-Thermostat: Thermostat controls implemented.
+Current Feature Status as of 3/20:  
+Thermostat: Thermostat controls implemented.  
 Schedule: Schedule controls implemented.   
 History: Unimplemented  
 Weather: Weather conditions implemented.  
