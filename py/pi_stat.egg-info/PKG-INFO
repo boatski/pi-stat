@@ -1,0 +1,20 @@
+Metadata-Version: 1.1
+Name: pi-stat
+Version: 0.0.1
+Summary: Short description of my_program...
+Home-page: http://www.my_program.org
+Author: Chad Strauch
+Author-email: my@mail.com
+License: GPL
+Download-URL: http://www.my_program.org/files/
+Description: Short description of my_program...
+Keywords: python tools utils internet www
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 2
+Classifier: License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)
+Classifier: License :: OSI Approved :: GNU Affero General Public License v3
+Classifier: Topic :: Internet
+Classifier: Topic :: Internet :: WWW/HTTP
