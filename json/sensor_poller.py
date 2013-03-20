@@ -1,3 +1,4 @@
+#!/usr/bin/python python
 import subprocess
 import ast
 
@@ -13,7 +14,7 @@ class SensorPoller(object):
 	firstWiringPiPin = 0
 
 	# shell commands
-	sensorProgramLocation = "./../Adafruit_DHT"
+	sensorProgramLocation = "./Adafruit_DHT"
 	sudo = "sudo"
 
 	def __init__(self, sensorPin = None, sensorType = None):
@@ -35,10 +36,11 @@ class SensorPoller(object):
 	A temporary dictionary is used to test on other platforms where the sensor can't be polled.
 	"""
 	def updateSensorData(self):
-		process = subprocess.Popen([self.sudo, self.sensorProgramLocation, str(self.defaultSensorType), str(self.defaultSensorPin)], stdout=subprocess.PIPE)
-		out, err = process.communicate()
+		#process = subprocess.Popen([self.sudo, self.sensorProgramLocation, str(self.defaultSensorType), str(self.defaultSensorPin)], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+		temp = subprocess.check_output(["sudo", "./Adafruit_DHT", "11", "4"])
+		#out, err = process.communicate()
 		#out = "'Temp':24, 'Hum':35"
-		out = "{" + out + "}"
+		out = "{" + temp + "}"
 
 		# Convert the string into a dictionary
 		self.data = ast.literal_eval(out)
@@ -46,6 +48,7 @@ class SensorPoller(object):
 		# Convert the temperature from C to F -> C * 9/5 + 32 = F
 		if self.data: # False if the dictionary is empty
 			self.data['Temp'] = self.data['Temp'] * 9/5 + 32
+			#self.data['Error'] = err
 
 	def getSensorData(self):
 		return self.data
