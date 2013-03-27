@@ -12,7 +12,7 @@ class Schedule(object):
 
 	def updateSchedule(self):
 		try:
-			con = lite.connect('../db/pi-stat.db')
+			con = lite.connect('../../db/pi-stat.db')
 			cur = con.cursor()
 			cur.execute("SELECT * FROM Schedule ;")
 			data = cur.fetchall()

@@ -14,6 +14,8 @@ class Thermostat(object):
 	# Indoor info
 	indoorTemperature = 0
 	indoorHumidity = 0
+	prevIndoorTemperature = 0
+	prevIndoorHumidity = 0
 
 	# Outdoor info
 	outdoorTemperature = 0
@@ -28,6 +30,7 @@ class Thermostat(object):
 		atexit.register(self.exitCleanup)
         
 		self.sensor = sensor
+		self.weather = weather
 		self.schedule = Schedule()
 		self.output = OutputHandler()
 		self.updateSetpoints()
@@ -43,7 +46,7 @@ class Thermostat(object):
 
 		# Get the sensor readings
 		self.sensorData = self.sensor.getSensorData()
-		self.weatherData = self.sensor.getWeatherData()
+		self.weatherData = self.weather.getWeatherData()
 	
 		# Only update temperatures if the dictionary is not empty
 		if self.sensorData:
@@ -58,9 +61,6 @@ class Thermostat(object):
 		if self.indoorTemperature != self.prevIndoorTemperature or self.indoorHumidity != self.prevIndoorHumidity:
 			self.prevIndoorTemperature = self.indoorTemperature
 			self.prevIndoorHumidity = self.indoorHumidity
-
-		print "Indoor Temperature: " + str(self.indoorTemperature) + "\nIndoor Humidity: " + str(self.indoorHumidity)
-		print "Outdoor Temperature: " + str(self.outdoorTemperature) + "\nOutdoor Humidity: " + str(self.outdoorHumidity)
 
 		self.setOutput()
 		self.output.printOutputStatus()
@@ -101,7 +101,7 @@ class Thermostat(object):
 	def updateSetpoints(self):
 		# Grab setpoint data from the sqlite database
 		try:
-			con = lite.connect('../db/pi-stat.db')
+			con = lite.connect('../../db/pi-stat.db')
 			cur = con.cursor()
 			cur.execute("SELECT * FROM Thermostat;")
 
