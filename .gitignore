@@ -4,3 +4,15 @@
 *.db
 
 *.db
+
+*.db
+
+.DS_Store
+
+*.DS_Store
+
+*.db
+
+db/pi-stat.db
+
+db/pi-stat.db
