@@ -22,7 +22,6 @@
     }// end foreach
 
     // Poll the temperature sensor and get outdoor temperatures.
-    #$temp = exec("python /var/opt/json/sensor.py");
     $temp = exec("python /home/pi/www/pi-stat/json/sensor.py");
 
     $jsonOutput = json_decode($temp);
@@ -33,9 +32,29 @@
     $outdoorTemperature = $jsonOutput->weather->current_observation->temp_f;
     $outdoorHumidity = $jsonOutput->weather->current_observation->relative_humidity;
 
-    $fan = 0;//$jsonOutput->outputs->fan;
-    $heat = 0;//$jsonOutput->outputs->heat;
-    $cool = 0;//$jsonOutput->outputs->cool;
+    $fan = $jsonOutput->outputs->fan;
+    $heat = $jsonOutput->outputs->heat;
+    $cool = $jsonOutput->outputs->cool;
+
+
+    // Need to optimize
+    if ($fan == "1") {
+      $fan = "On";
+    } else {
+      $fan = "Off";
+    }// end if
+
+    if ($heat == "1") {
+      $heat = "On";
+    } else {
+      $heat = "Off";
+    }// end if
+
+    if ($cool == "1") {
+      $cool = "On";
+    } else {
+      $cool = "Off";
+    }// end if
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
