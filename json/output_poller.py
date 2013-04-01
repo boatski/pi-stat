@@ -26,9 +26,13 @@ class OutputPoller(object):
 
 			status = {'fan':self.removeEscapeChar(fan), 'heat':self.removeEscapeChar(heat), 'cool':self.removeEscapeChar(cool)}
 		except Exception:
+			# Notification if the script failed to get output statuses.
 			status = {'fan':"FAIL", 'heat':"FAIL", 'cool':"FAIL"}
 
 		return status
 
+	"""
+	gpio read pin# returns a 0 or 1.
+	"""
 	def removeEscapeChar(self, out):
 		return out[0]
