@@ -42,9 +42,8 @@
 
   <div class="row">
     <div class="twelve columns" id="graph">
-		<p>Here's an example graph of temperatures.</p>
-		<img src="images/graph.png" />
-	</div>
+		  <div id="graph" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+	 </div>
   </div>
   
   
@@ -52,7 +51,9 @@
   <!-- Included JS Files (Compressed) -->
   <script src="js/foundation/jquery.js"></script>
   <script src="js/foundation/foundation.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/highcharts/highcharts.js"></script>
+  <script src="js/highcharts/modules/exporting.js"></script>
+  <script src="js/history.js"></script>
   
   <!-- Initialize JS Plugins -->
   <script src="js/foundation/app.js"></script>
