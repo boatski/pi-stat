@@ -1,56 +1,121 @@
  $(document).ready(function() 
  {
- 	$('#graph').highcharts({
-        chart: {
-            type: 'line',
-            marginRight: 175,
-            marginBottom: 25
-        },
-        title: {
-            text: 'Pi-Stat 24 Hour Datalog',
-            x: -20 //center
-        },
-        subtitle: {
-            text: '',
-            x: -20
-        },
-        xAxis: {
-            categories: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00',
-                '7:00', '8:00', '9:00', '10:00', '11:00', '12:00']
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (°F)'
+    getHistoryData();
+
+    function getHistoryData() {
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/getHistoryData.php',
+            dataType: 'json',
+            error: function(xhr, status, error) {
+                alert(status);
             },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
+            success: function(result) {
+                displayHistory(result.response);
+            },
+        });
+    }// end getHistoryData
+
+    function displayHistory(data) {
+        // Build arrays for highcarts data
+        var arrayData = buildArray(data);
+
+     	$('#graph').highcharts({
+            chart: {
+                type: 'column',
+                marginBottom: 75
+            },
+            title: {
+                text: 'Pi-Stat 24 Hour Datalog',
+                x: -20 //center
+            },
+            xAxis: {
+                categories: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00',
+                '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'],
+                labels: {
+                    rotation: -45,
+                    align: 'right'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Temperature (°F)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                formatter: function() {
+                    if (this.series.type === 'column' && this.y > 0) {
+                        return '<b>' + this.series.name + ':</b> On';
+                    } else if (this.series.type === 'line' && (this.series.name === 'Indoor Temperature' || this.series.name === 'Outdoor Temperature')) {
+                        return '<b>' + this.series.name + ':</b> ' + this.y + '°F';
+                    } else {
+                        return '<b>' + this.series.name + ':</b> ' + this.y + '%';
+                    }
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            legend: {
+                borderWidth: 0
+            },
+            series: [{
+                name: 'Fan',
+                data: arrayData['fan']
+            }, {
+                name: 'Heat',
+                data: arrayData['heat']
+            }, {
+                name: 'Cool',
+                data: arrayData['cool']
+            }, {
+                type: 'line',
+                name: 'Indoor Temperature',
+                data: arrayData['indoorTemps']
+            }, {
+                type: 'line',
+                name: 'Indoor Humidity',
+                data: arrayData['indoorHums']
+            }, {
+                type: 'line',
+                name: 'Outdoor Temperature',
+                data: arrayData['outdoorTemps']
+            }, {
+                type: 'line',
+                name: 'Outdoor Humidity',
+                data: arrayData['outdoorHums']
             }]
-        },
-        tooltip: {
-            valueSuffix: '°F'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'top',
-            x: -10,
-            y: 100,
-            borderWidth: 0
-        },
-        series: [{
-            name: 'Indoor Temperature',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'Indoor Humidity',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        }, {
-            name: 'Outdoor Temperature',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        }, {
-            name: 'Outdoor Humidity',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
-     });
+         });
+    }// end displayHistory
+
+    function buildArray(data) {
+        var indoorTemps = [];
+        var indoorHums = [];
+        var outdoorTemps = [];
+        var outdoorHums = [];
+        var fan = [];
+        var heat = [];
+        var cool = [];
+
+        $.each(data, function(index, element) {
+            indoorTemps.push(parseFloat(element.IndoorTemperature));
+            indoorHums.push(parseFloat(element.IndoorHumidity));
+            outdoorTemps.push(parseFloat(element.OutdoorTemperature));
+            outdoorHums.push(parseFloat(element.OutdoorHumidity));
+            fan.push(parseFloat(element.Fan*10));
+            heat.push(parseFloat(element.Heat*10));
+            cool.push(parseFloat(element.Cool*10));
+        });
+
+        var array = {'indoorTemps':indoorTemps, 'indoorHums':indoorHums, 'outdoorTemps':outdoorTemps, 'outdoorHums':outdoorHums,
+                        'fan':fan, 'heat':heat, 'cool':cool};
+        return array;
+    }// end buildIndoorTemperatureArray
 });

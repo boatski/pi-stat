@@ -43,6 +43,7 @@
   <div class="row">
     <div class="twelve columns" id="graph">
 		  <div id="graph" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+      <div id="temp"></div>
 	 </div>
   </div>
   
