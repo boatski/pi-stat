@@ -62,3 +62,9 @@
 .schedule-submit {
 	margin-top: 10px;
 }
+
+/***** History *****/
+#graph {
+	height: 100%;
+
+}
