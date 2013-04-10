@@ -93,7 +93,7 @@
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
       <div>
-        Indoor Temperature: <?php echo $indoorTemperature ?><br />
+        <div>Indoor Temperature: <span id="indoorTemp">0</span></div>
         Indoor Humidity: <?php echo $indoorHumidity ?><br />
         Outdoor Temperature: <?php echo $outdoorTemperature ?><br />
         Outdoor Humidity: <?php echo $outdoorHumidity ?><br />

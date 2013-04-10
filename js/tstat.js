@@ -1,6 +1,8 @@
  $(document).ready(function() 
  {
  	$('.success').hide();
+ 
+ 	getThermostatData();
 
 	$("#thermostat").submit( function() {
 		var formData = $('#thermostat').serialize();
@@ -22,6 +24,21 @@
 	    });
 	    return false;
 	  } );
- 
+
+    function getThermostatData() {
+        $.ajax({
+            type: 'POST',
+            url: 'ajax/getThermostatData.php',
+            dataType: 'json',
+            error: function(xhr, status, error) {
+                alert(status + " " + error);
+            },
+            success: function(result) {
+                console.log(result);
+                $('#indoorTemp').html(result.response.IndoorTemperature);
+                //displayHistory(result.response);
+            },
+        });
+    }// end getHistoryData
  
  });
