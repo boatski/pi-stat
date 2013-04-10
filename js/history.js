@@ -55,8 +55,8 @@
                         return '<b>' + this.series.name + ':</b> ' + this.y + '°F';
                     } else {
                         return '<b>' + this.series.name + ':</b> ' + this.y + '%';
-                    }
-                }
+                    }// end if
+                }// end function
             },
             plotOptions: {
                 column: {
@@ -67,8 +67,8 @@
                         formatter: function() {
                             if (this.y > 0) {
                                 return this.series.name[0];
-                            }
-                        }
+                            }// end if
+                        }// end function
                     }
                 }
             },
@@ -104,6 +104,9 @@
          });
     }// end displayHistory
 
+    /*
+    Builds an array for each data type to be displayed on the graph.
+    */
     function buildArray(data) {
         var indoorTemps = [];
         var indoorHums = [];
@@ -115,14 +118,14 @@
         var dateTime = [];
 
         $.each(data, function(index, element) {
-            indoorTemps.push(parseFloat(element.IndoorTemperature));
-            indoorHums.push(parseFloat(element.IndoorHumidity));
-            outdoorTemps.push(parseFloat(element.OutdoorTemperature));
-            outdoorHums.push(parseFloat(element.OutdoorHumidity));
-            fan.push(parseFloat(element.Fan*10));
-            heat.push(parseFloat(element.Heat*10));
-            cool.push(parseFloat(element.Cool*10));
-            dateTime.push(element.Date);
+            indoorTemps.unshift(parseFloat(element.IndoorTemperature));
+            indoorHums.unshift(parseFloat(element.IndoorHumidity));
+            outdoorTemps.unshift(parseFloat(element.OutdoorTemperature));
+            outdoorHums.unshift(parseFloat(element.OutdoorHumidity));
+            fan.unshift(parseFloat(element.Fan*10));
+            heat.unshift(parseFloat(element.Heat*10));
+            cool.unshift(parseFloat(element.Cool*10));
+            dateTime.unshift(element.Date);
         });
 
         formattedDateTime = formatDateTime(dateTime);
@@ -132,13 +135,16 @@
         return array;
     }// end buildIndoorTemperatureArray
 
+    /*
+    Formats the datetime string into hours only.
+    */
     function formatDateTime(data) {
         for (var i = 0; i < data.length; i++) {
             var splitData = data[i].split(':');
             data[i] = splitData[0] + ":00";
             splitData = data[i].split(' ');
             data[i] = splitData[1];
-        }
+        }// end for
         return data;
-    }
+    }// end formatDateTime
 });
