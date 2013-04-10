@@ -11,6 +11,7 @@
                 alert(status);
             },
             success: function(result) {
+                console.log(result);
                 displayHistory(result.response);
             },
         });
@@ -30,8 +31,7 @@
                 x: -20 //center
             },
             xAxis: {
-                categories: ['1:00', '2:00', '3:00', '4:00', '5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00',
-                '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00'],
+                categories: arrayData['date'],
                 labels: {
                     rotation: -45,
                     align: 'right'
@@ -39,7 +39,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Temperature (°F)'
+                    text: 'Thermostat'
                 },
                 plotLines: [{
                     value: 0,
@@ -60,7 +60,16 @@
             },
             plotOptions: {
                 column: {
-                    stacking: 'normal'
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true,
+                        color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                        formatter: function() {
+                            if (this.y > 0) {
+                                return this.series.name[0];
+                            }
+                        }
+                    }
                 }
             },
             legend: {
@@ -103,6 +112,7 @@
         var fan = [];
         var heat = [];
         var cool = [];
+        var dateTime = [];
 
         $.each(data, function(index, element) {
             indoorTemps.push(parseFloat(element.IndoorTemperature));
@@ -112,10 +122,23 @@
             fan.push(parseFloat(element.Fan*10));
             heat.push(parseFloat(element.Heat*10));
             cool.push(parseFloat(element.Cool*10));
+            dateTime.push(element.Date);
         });
 
+        formattedDateTime = formatDateTime(dateTime);
+
         var array = {'indoorTemps':indoorTemps, 'indoorHums':indoorHums, 'outdoorTemps':outdoorTemps, 'outdoorHums':outdoorHums,
-                        'fan':fan, 'heat':heat, 'cool':cool};
+                        'fan':fan, 'heat':heat, 'cool':cool, 'date':formattedDateTime};
         return array;
     }// end buildIndoorTemperatureArray
+
+    function formatDateTime(data) {
+        for (var i = 0; i < data.length; i++) {
+            var splitData = data[i].split(':');
+            data[i] = splitData[0] + ":00";
+            splitData = data[i].split(' ');
+            data[i] = splitData[1];
+        }
+        return data;
+    }
 });
