@@ -12,7 +12,7 @@ class PiStat(object):
         # Time intervals for various functions in seconds
         self.sensorPollInterval = 5
         self.weatherPollInterval = 300
-        self.historyUpdateInterval = 600
+        self.historyUpdateInterval = 3600
 
         # Objects
         self.sensor = DHT()
