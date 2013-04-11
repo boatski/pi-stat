@@ -20,41 +20,6 @@
 
       $db = null;
     }// end foreach
-
-    // Poll the temperature sensor and get outdoor temperatures.
-    $temp = exec("python /home/pi/www/pi-stat/json/sensor.py");
-
-    $jsonOutput = json_decode($temp);
-
-    $indoorTemperature = $jsonOutput->sensor->indoorTemperature;
-    $indoorHumidity = $jsonOutput->sensor->indoorHumidity;
-
-    $outdoorTemperature = $jsonOutput->weather->current_observation->temp_f;
-    $outdoorHumidity = $jsonOutput->weather->current_observation->relative_humidity;
-
-    $fan = $jsonOutput->outputs->fan;
-    $heat = $jsonOutput->outputs->heat;
-    $cool = $jsonOutput->outputs->cool;
-
-
-    // Need to optimize
-    if ($fan == "1") {
-      $fan = "On";
-    } else {
-      $fan = "Off";
-    }// end if
-
-    if ($heat == "1") {
-      $heat = "On";
-    } else {
-      $heat = "Off";
-    }// end if
-
-    if ($cool == "1") {
-      $cool = "On";
-    } else {
-      $cool = "Off";
-    }// end if
   ?>
 
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
@@ -93,13 +58,13 @@
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
       <div>
-        <div>Indoor Temperature: <span id="indoorTemp">0</span></div>
-        Indoor Humidity: <?php echo $indoorHumidity ?><br />
-        Outdoor Temperature: <?php echo $outdoorTemperature ?><br />
-        Outdoor Humidity: <?php echo $outdoorHumidity ?><br />
-        Fan: <?php echo $fan ?><br />
-        Heat: <?php echo $heat ?><br />
-        Cool: <?php echo $cool ?><br />
+        <div>Indoor Temperature: <span id="indoorTemp">0</span> F</div>
+        <div>Indoor Humidity: <span id="indoorHum">0</span></div>
+        <div>Outdoor Temperature: <span id="outdoorTemp">0</span> F</div>
+        <div>Outdoor Humidity: <span id="outdoorHum">0</span></div>
+        <div>Fan: <span id="fan">Off</span></div>
+        <div>Heat: <span id="heat">Off</span></div>
+        <div>Cool: <span id="cool">Off</span></div>
       </div>
   		<ul class="nav-bar">
   		  <li class="active"><a href="index.php">Thermostat</a></li>

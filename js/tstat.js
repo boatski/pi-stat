@@ -34,9 +34,18 @@
                 alert(status + " " + error);
             },
             success: function(result) {
-                console.log(result);
                 $('#indoorTemp').html(result.response.IndoorTemperature);
-                //displayHistory(result.response);
+                $('#indoorHum').html(result.response.IndoorHumidity);
+                $('#outdoorTemp').html(result.response.OutdoorTemperature);
+                $('#outdoorHum').html(result.response.OutdoorHumidity);
+                $('#fan').html(result.response.Fan);
+                $('#heat').html(result.response.Heat);
+                $('#cool').html(result.response.Cool);
+                /*$('input[name=occupied-cool]').val();
+                $('input[name=unoccupied-cool]').val();
+                $('input[name=occupied-heat]').val();
+                $('input[name=unoccupied-heat]').val();
+                $('input[name=outdoor-lockout]').val();*/
             },
         });
     }// end getHistoryData
