@@ -53,19 +53,20 @@
 <body>
 
 
+  <div id="tstat-data">
+    <ul>
+      <li>IndoorTemperature: <span id="indoorTemp">0</span> F</li>
+      <li>Indoor Humidity: <span id="indoorHum">0</span></li>
+      <li>Outdoor Temperature: <span id="outdoorTemp">0</span> F</li>
+      <li>Outdoor Humidity: <span id="outdoorHum">0</span></li>
+      <li>Fan: <span id="fan">Off</span></li>
+      <li>Heat: <span id="heat">Off</span></li>
+      <li>Cool: <span id="cool">Off</span></li>
+  </div>
 
   <div class="row">
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
-      <div>
-        <div>Indoor Temperature: <span id="indoorTemp">0</span> F</div>
-        <div>Indoor Humidity: <span id="indoorHum">0</span></div>
-        <div>Outdoor Temperature: <span id="outdoorTemp">0</span> F</div>
-        <div>Outdoor Humidity: <span id="outdoorHum">0</span></div>
-        <div>Fan: <span id="fan">Off</span></div>
-        <div>Heat: <span id="heat">Off</span></div>
-        <div>Cool: <span id="cool">Off</span></div>
-      </div>
   		<ul class="nav-bar">
   		  <li class="active"><a href="index.php">Thermostat</a></li>
         <li class=""><a href="schedule.php">Schedule</a></li>
