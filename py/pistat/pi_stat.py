@@ -27,7 +27,7 @@ class PiStat(object):
         self.updateSensorData()
 
         # start calling updateHistoryData now and every 600sec thereafter
-        self.updateHistoryData()
+        #self.updateHistoryData()
 
 
     """
