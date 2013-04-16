@@ -55,13 +55,13 @@
 
   <div id="tstat-data">
     <ul>
-      <li>IndoorTemperature: <span id="indoorTemp">0</span> F</li>
-      <li>Indoor Humidity: <span id="indoorHum">0</span></li>
-      <li>Outdoor Temperature: <span id="outdoorTemp">0</span> F</li>
-      <li>Outdoor Humidity: <span id="outdoorHum">0</span></li>
-      <li>Fan: <span id="fan">Off</span></li>
-      <li>Heat: <span id="heat">Off</span></li>
-      <li>Cool: <span id="cool">Off</span></li>
+      <li>IndoorTemperature: <span id="indoorTemp">--</span> F</li>
+      <li>Indoor Humidity: <span id="indoorHum">--</span></li>
+      <li>Outdoor Temperature: <span id="outdoorTemp">--</span> F</li>
+      <li>Outdoor Humidity: <span id="outdoorHum">--</span></li>
+      <li>Fan: <span id="fan">--</span></li>
+      <li>Heat: <span id="heat">--</span></li>
+      <li>Cool: <span id="cool">--</span></li>
   </div>
 
   <div class="row">
@@ -174,6 +174,7 @@
 
   <script src="js/jquery-ui.js"></script>
   <script src="js/tstat.js"></script>
+  <script src="js/updateTstat.js"></script>
   
   <!-- Initialize JS Plugins -->
   <script src="js/foundation/app.js"></script>

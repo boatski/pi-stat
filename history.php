@@ -28,6 +28,17 @@
 </head>
 <body>
 
+  <div id="tstat-data">
+    <ul>
+      <li>IndoorTemperature: <span id="indoorTemp">--</span> F</li>
+      <li>Indoor Humidity: <span id="indoorHum">--</span></li>
+      <li>Outdoor Temperature: <span id="outdoorTemp">--</span> F</li>
+      <li>Outdoor Humidity: <span id="outdoorHum">--</span></li>
+      <li>Fan: <span id="fan">--</span></li>
+      <li>Heat: <span id="heat">--</span></li>
+      <li>Cool: <span id="cool">--</span></li>
+  </div>
+
   <div class="row">
     <div class="twelve columns">
       <h2>Pi-Stat</h2>
@@ -55,6 +66,7 @@
   <script src="js/highcharts/highcharts.js"></script>
   <script src="js/highcharts/modules/exporting.js"></script>
   <script src="js/history.js"></script>
+  <script src="js/updateTstat.js"></script>
   
   <!-- Initialize JS Plugins -->
   <script src="js/foundation/app.js"></script>
