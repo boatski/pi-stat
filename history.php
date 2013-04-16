@@ -46,7 +46,6 @@
 		  <li class=""><a href="index.php">Thermostat</a></li>
       <li class=""><a href="schedule.php">Schedule</a></li>
 		  <li class="active"><a href="history.php">History</a></li>
-		  <li class=""><a href="alarms.php">Alarms</a></li>
 		</ul>
     </div>
   </div>
