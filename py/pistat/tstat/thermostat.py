@@ -63,7 +63,7 @@ class Thermostat(object):
 			self.prevIndoorHumidity = self.indoorHumidity
 
 		self.setOutput()
-		#self.output.printOutputStatus()
+		self.output.printOutputStatus()
 		#print "Schedule: " + str(self.scheduleIsOn)
 
 		
