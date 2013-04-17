@@ -1,14 +1,17 @@
 import subprocess
 import ast
+from time import sleep
 
 class OutputHandler(object):
 
 	fanPin = 0
 	fanOutput = False
+	fanDelay = 5 # 5 seconds
 	heatPin = 1
 	heatOutput = False
 	coolPin = 2
 	coolOutput = False
+	heatCoolDelay = 10 # 10 seconds
 
 	outputOn = 1
 	outputOff = 0
@@ -30,9 +33,9 @@ class OutputHandler(object):
 		process = subprocess.Popen([self.gpioCommand, self.mode, str(self.coolPin), self.outputMode], stdout=subprocess.PIPE)
 
 	def disableAllOutputs(self):
-		self.disableFan()
 		self.disableHeat()
 		self.disableCool()
+		self.disableFan()
 
 	"""
 	The fan should be enabled before heat or cool is enabled. Ideally, there should be a small delay before
@@ -40,6 +43,9 @@ class OutputHandler(object):
 	"""
 	def enableFan(self):
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		# Start fan delay if enabling fan
+		if self.fanOutput == False:
+			sleep(self.fanDelay)
 		self.fanOutput = True
 
 	"""
@@ -47,12 +53,17 @@ class OutputHandler(object):
 	disabling heat or cool as well.
 	"""
 	def disableFan(self):
+		# Start fan delay if disabling fan
+		if self.fanOutput == True:
+			sleep(self.fanDelay)
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.fanPin), str(self.outputOff)], stdout=subprocess.PIPE)
 		self.fanOutput = False
 
 	def enableCool(self):
 		self.enableFan()
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.coolPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		if self.coolOutput == False:
+			sleep(self.heatCoolDelay)
 		self.coolOutput = True
 
 	def disableCool(self):
@@ -63,6 +74,8 @@ class OutputHandler(object):
 	def enableHeat(self):
 		self.enableFan()
 		process = subprocess.Popen([self.gpioCommand, self.write, str(self.heatPin), str(self.outputOn)], stdout=subprocess.PIPE)
+		if self.heatOutput == False:
+			sleep(self.heatCoolDelay)
 		self.heatOutput = True
 
 	def disableHeat(self):
